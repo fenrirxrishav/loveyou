@@ -49,27 +49,25 @@ const AnimatedText = ({ words }: { words: string[] }) => {
   );
 };
 
-const FloatingHearts = () => {
-  const hearts = useMemo(() => Array.from({ length: 15 }).map((_, i) => ({
+const BlowingKissAnimation = () => {
+  const kisses = useMemo(() => Array.from({ length: 7 }).map((_, i) => ({
     id: i,
-    left: `${Math.random() * 100}%`,
-    animationDuration: `${Math.random() * 5 + 5}s`,
-    animationDelay: `${Math.random() * 5}s`,
+    animationDuration: `${Math.random() * 1.5 + 1}s`,
+    animationDelay: `${i * 0.15 + Math.random() * 0.2}s`,
     size: `${Math.random() * 16 + 12}px`,
   })), []);
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-full">
-      {hearts.map(heart => (
+    <div className="absolute bottom-[30%] left-[20%] pointer-events-none">
+      {kisses.map(kiss => (
         <Heart
-          key={heart.id}
-          className="absolute bottom-0 text-primary fill-primary/50 animate-float-up"
+          key={kiss.id}
+          className="absolute text-primary fill-primary/50 animate-kiss-blow origin-bottom-left"
           style={{
-            left: heart.left,
-            animationDuration: heart.animationDuration,
-            animationDelay: heart.animationDelay,
-            width: heart.size,
-            height: heart.size,
+            animationDuration: kiss.animationDuration,
+            animationDelay: kiss.animationDelay,
+            width: kiss.size,
+            height: kiss.size,
           }}
         />
       ))}
@@ -139,7 +137,7 @@ export default function MirrorPage() {
           muted
           className="w-full h-full object-cover scale-x-[-1] rounded-full"
         />
-        <FloatingHearts />
+        <BlowingKissAnimation />
       </div>
     )
   }

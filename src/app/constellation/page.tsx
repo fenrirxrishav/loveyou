@@ -54,15 +54,14 @@ const memories = [
 type Memory = (typeof memories)[0];
 
 const Star = ({ memory, onClick }: { memory: Memory; onClick: (memory: Memory) => void }) => (
-  <div
-    className="absolute w-4 h-4 cursor-pointer"
-    style={{ top: memory.position.top, left: memory.position.left }}
+  <button
+    className="absolute flex items-center justify-center p-3"
+    style={{ top: memory.position.top, left: memory.position.left, transform: 'translate(-50%, -50%)' }}
     onClick={() => onClick(memory)}
-    role="button"
     aria-label={`Open memory: ${memory.title}`}
   >
-    <div className="w-full h-full bg-accent rounded-full accent-glow transition-transform hover:scale-150" />
-  </div>
+    <div className="w-4 h-4 bg-accent rounded-full accent-glow transition-transform hover:scale-150" />
+  </button>
 );
 
 export default function ConstellationPage() {
@@ -70,7 +69,7 @@ export default function ConstellationPage() {
 
   return (
     <main className="min-h-screen w-full relative">
-      <Starfield starCount={1000} className="opacity-50"/>
+      <Starfield starCount={2000} className="opacity-50"/>
       <div className="relative z-10 container mx-auto px-4 py-24 pb-32">
         <PageTitle>Our Constellation</PageTitle>
         <p className="text-center font-body text-lg text-foreground/80 mb-8 animate-fade-in-up">

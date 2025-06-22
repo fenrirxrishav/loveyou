@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <main className="relative flex flex-col items-center justify-center h-screen w-full overflow-hidden">
       <Starfield
-        starCount={1000}
+        starCount={2000}
         starColor={[255, 255, 255]}
         speedFactor={0.05}
         backgroundColor="transparent"

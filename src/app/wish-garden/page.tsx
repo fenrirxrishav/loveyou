@@ -2,7 +2,7 @@
 import { PageTitle } from '@/components/page-title';
 import { PageNavigation } from '@/components/page-navigation';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Starfield } from '@/components/starfield';
 
 const wishes = [
@@ -16,12 +16,13 @@ const wishes = [
 const Firefly = ({ wish, position }: { wish: string; position: { top: string; left: string } }) => (
   <Popover>
     <PopoverTrigger asChild>
-      <div
-        className="absolute w-3 h-3 cursor-pointer"
-        style={{ ...position, animation: `float ${Math.random() * 5 + 3}s ease-in-out infinite` }}
+      <button
+        className="absolute flex items-center justify-center p-3"
+        style={{ ...position, transform: 'translate(-50%, -50%)', animation: `float ${Math.random() * 5 + 3}s ease-in-out infinite` }}
+        aria-label="Reveal a wish"
       >
-        <div className="w-full h-full bg-accent rounded-full accent-glow transition-transform hover:scale-150" />
-      </div>
+        <div className="w-3 h-3 bg-accent rounded-full accent-glow transition-transform hover:scale-150" />
+      </button>
     </PopoverTrigger>
     <PopoverContent className="w-64 bg-card/80 backdrop-blur-lg border-accent/50 text-foreground">
       <p className="font-body text-center">{wish}</p>
@@ -35,13 +36,13 @@ export default function WishGardenPage() {
        <style>
         {`
           @keyframes float {
-            0% { transform: translate(0, 0); }
-            50% { transform: translate(${Math.random() * 20 - 10}px, ${Math.random() * 20 - 10}px); }
-            100% { transform: translate(0, 0); }
+            0% { transform: translate(-50%, -50%); }
+            50% { transform: translate(calc(-50% + ${Math.random() * 20 - 10}px), calc(-50% + ${Math.random() * 20 - 10}px)); }
+            100% { transform: translate(-50%, -50%); }
           }
         `}
       </style>
-      <Starfield starCount={200} starColor={[212, 172, 13]} speedFactor={0.02} className="opacity-70" />
+      <Starfield starCount={500} starColor={[212, 172, 13]} speedFactor={0.02} className="opacity-70" />
       <main className="relative z-10 container mx-auto px-4 py-24 pb-32">
         <PageTitle>The Wish Garden</PageTitle>
         <p className="text-center font-body text-lg text-foreground/80 mb-8 animate-fade-in-up">

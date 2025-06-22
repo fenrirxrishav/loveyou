@@ -9,6 +9,19 @@ const adjectives = ["Stunning", "Kind", "Funny", "My Safe Place", "My Always", "
 
 const AnimatedText = ({ words }: { words: string[] }) => {
   const [index, setIndex] = useState(0);
+  const [translateY, setTranslateY] = useState('-220px');
+
+  useEffect(() => {
+    const onResize = () => {
+      setTranslateY(window.innerWidth < 768 ? '-160px' : '-220px');
+    };
+
+    onResize();
+    window.addEventListener('resize', onResize);
+
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
 
   useEffect(() => {
     if (index >= words.length) return;
@@ -23,9 +36,9 @@ const AnimatedText = ({ words }: { words: string[] }) => {
       {words.slice(0, index).map((word, i) => (
         <p
           key={i}
-          className="absolute font-headline text-3xl text-primary text-glow animate-fade-in-up"
+          className="absolute font-headline text-2xl md:text-3xl text-primary text-glow animate-fade-in-up"
           style={{
-            transform: `rotate(${i * (360 / words.length)}deg) translateY(-250px) rotate(-${i * (360 / words.length)}deg)`,
+            transform: `rotate(${i * (360 / words.length)}deg) translateY(${translateY}) rotate(-${i * (360 / words.length)}deg)`,
             animationDelay: `${i * 0.2}s`
           }}
         >

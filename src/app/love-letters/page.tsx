@@ -121,7 +121,7 @@ export default function LoveLettersPage() {
           )}
         </DialogContent>
       </Dialog>
-      <PageNavigation backLink="/constellation" nextLink="/soundtrack" />
+      <PageNavigation backLink="/constellation" nextLink="/wish-garden" />
     </div>
   );
 }

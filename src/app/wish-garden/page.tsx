@@ -57,7 +57,7 @@ export default function WishGardenPage() {
           </CardContent>
         </Card>
       </main>
-      <PageNavigation backLink="/soundtrack" nextLink="/mirror" />
+      <PageNavigation backLink="/love-letters" nextLink="/mirror" />
     </div>
   );
 }

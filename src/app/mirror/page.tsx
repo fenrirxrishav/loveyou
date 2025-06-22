@@ -1,9 +1,9 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { PageTitle } from '@/components/page-title';
 import { PageNavigation } from '@/components/page-navigation';
 import { Button } from '@/components/ui/button';
-import { Camera, CameraOff } from 'lucide-react';
+import { Camera, CameraOff, Heart } from 'lucide-react';
 
 const adjectives = ["Stunning", "Kind", "Funny", "My Safe Place", "My Always", "My Everything"];
 
@@ -44,6 +44,34 @@ const AnimatedText = ({ words }: { words: string[] }) => {
         >
           {word}
         </p>
+      ))}
+    </div>
+  );
+};
+
+const FloatingHearts = () => {
+  const hearts = useMemo(() => Array.from({ length: 15 }).map((_, i) => ({
+    id: i,
+    left: `${Math.random() * 100}%`,
+    animationDuration: `${Math.random() * 5 + 5}s`,
+    animationDelay: `${Math.random() * 5}s`,
+    size: `${Math.random() * 16 + 12}px`,
+  })), []);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-full">
+      {hearts.map(heart => (
+        <Heart
+          key={heart.id}
+          className="absolute bottom-0 text-primary fill-primary/50 animate-float-up"
+          style={{
+            left: heart.left,
+            animationDuration: heart.animationDuration,
+            animationDelay: heart.animationDelay,
+            width: heart.size,
+            height: heart.size,
+          }}
+        />
       ))}
     </div>
   );
@@ -103,6 +131,7 @@ export default function MirrorPage() {
     }
     
     return (
+      <div className="relative w-full h-full">
         <video
           ref={videoRef}
           autoPlay
@@ -110,6 +139,8 @@ export default function MirrorPage() {
           muted
           className="w-full h-full object-cover scale-x-[-1] rounded-full"
         />
+        <FloatingHearts />
+      </div>
     )
   }
 

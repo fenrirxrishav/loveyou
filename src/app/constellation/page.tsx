@@ -9,58 +9,109 @@ import Image from 'next/image';
 import { Starfield } from '@/components/starfield';
 
 const memories = [
+  // Letter A
   {
     id: 1,
-    title: "The Day We Met",
-    content: "I still remember what you were wearing. It felt like the universe conspired to bring us together.",
-    position: { top: '20%', left: '15%' },
+    title: "Apex of Our Story",
+    content: "The very peak, where our story began. It felt like destiny.",
+    position: { top: '20%', left: '25%' },
+    image: 'https://placehold.co/400x300',
+    aiHint: 'galaxy stars',
+  },
+  {
+    id: 2,
+    title: "Our First Foundation",
+    content: "The left pillar of our love, strong and true from our first meeting.",
+    position: { top: '80%', left: '15%' },
     image: 'https://placehold.co/400x300',
     aiHint: 'couple meeting',
   },
   {
-    id: 2,
-    title: "Our First Movie Night",
-    content: "You fell asleep halfway through, and I loved watching you more than the movie.",
-    position: { top: '50%', left: '30%' },
+    id: 3,
+    title: "Our Second Foundation",
+    content: "The right pillar of our love, built on laughter and shared dreams.",
+    position: { top: '80%', left: '35%' },
+    image: 'https://placehold.co/400x300',
+    aiHint: 'couple laughing',
+  },
+  {
+    id: 4,
+    title: "The Connecting Bridge",
+    content: "This is the bridge that connects our hearts across any distance.",
+    position: { top: '55%', left: '20%' },
     image: 'https://placehold.co/400x300',
     aiHint: 'couple movie',
   },
   {
-    id: 3,
-    title: "A Comforting Smile",
-    content: "The time you made me smile when I was at my worst. You're my sunshine.",
-    position: { top: '35%', left: '75%' },
+    id: 5,
+    title: "Our Unbreakable Bond",
+    content: "And here our bond was sealed. Nothing can break this connection.",
+    position: { top: '55%', left: '30%' },
     image: 'https://placehold.co/400x300',
     aiHint: 'comforting smile',
   },
+  // Letter R
   {
-    id: 4,
-    title: "Late Night Talks",
-    content: "Our conversations under the stars, sharing dreams and fears. That's when I knew.",
-    position: { top: '70%', left: '60%' },
+    id: 6,
+    title: "My Constant Star",
+    content: "You are the unwavering, constant star in my sky.",
+    position: { top: '20%', left: '55%' },
+    image: 'https://placehold.co/400x300',
+    aiHint: 'night sky',
+  },
+  {
+    id: 7,
+    title: "Grounded in Love",
+    content: "Your love keeps me grounded, always.",
+    position: { top: '80%', left: '55%' },
+    image: 'https://placehold.co/400x300',
+    aiHint: 'couple holding hands',
+  },
+  {
+    id: 8,
+    title: "The Circle of Us",
+    content: "The start of the beautiful, full circle of our love.",
+    position: { top: '20%', left: '70%' },
     image: 'https://placehold.co/400x300',
     aiHint: 'night talk',
   },
   {
-    id: 5,
-    title: "First 'I Love You'",
-    content: "The world stopped for a moment. Every 'I love you' since has felt just as magical.",
-    position: { top: '80%', left: '25%' },
+    id: 9,
+    title: "Our Embrace",
+    content: "How our lives curved to meet in a perfect embrace.",
+    position: { top: '40%', left: '75%' },
+    image: 'https://placehold.co/400x300',
+    aiHint: 'couple embrace',
+  },
+  {
+    id: 10,
+    title: "The Heart of it All",
+    content: "At the heart of it all, there is you. Always you.",
+    position: { top: '50%', left: '65%' },
     image: 'https://placehold.co/400x300',
     aiHint: 'romantic couple',
   },
+  {
+    id: 11,
+    title: "Our Shared Path",
+    content: "From our love, a new path forward, one I walk joyfully with you.",
+    position: { top: '80%', left: '75%' },
+    image: 'https://placehold.co/400x300',
+    aiHint: 'couple walking',
+  },
 ];
+
 
 type Memory = (typeof memories)[0];
 
 const Star = ({ memory, onClick }: { memory: Memory; onClick: (memory: Memory) => void }) => (
   <button
-    className="absolute flex items-center justify-center p-3"
+    className="absolute flex items-center justify-center p-4"
     style={{ top: memory.position.top, left: memory.position.left, transform: 'translate(-50%, -50%)' }}
     onClick={() => onClick(memory)}
     aria-label={`Open memory: ${memory.title}`}
   >
-    <div className="w-4 h-4 bg-accent rounded-full accent-glow transition-transform hover:scale-150" />
+    <div className="w-5 h-5 bg-accent rounded-full accent-glow transition-transform hover:scale-150" />
   </button>
 );
 

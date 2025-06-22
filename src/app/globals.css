@@ -108,7 +108,7 @@ body {
   }
 
   .animate-kiss-blow {
-    animation: kiss-blow ease-out forwards;
+    animation: kiss-blow ease-in-out infinite;
   }
 
   @keyframes kiss-blow {

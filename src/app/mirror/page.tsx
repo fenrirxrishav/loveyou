@@ -4,6 +4,7 @@ import { PageTitle } from '@/components/page-title';
 import { PageNavigation } from '@/components/page-navigation';
 import { Button } from '@/components/ui/button';
 import { Camera, CameraOff, Heart } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 const adjectives = ["Stunning", "Kind", "Funny", "My Safe Place", "My Always", "My Everything"];
 
@@ -50,19 +51,19 @@ const AnimatedText = ({ words }: { words: string[] }) => {
 };
 
 const BlowingKissAnimation = () => {
-  const kisses = useMemo(() => Array.from({ length: 7 }).map((_, i) => ({
+  const kisses = useMemo(() => Array.from({ length: 15 }).map((_, i) => ({
     id: i,
-    animationDuration: `${Math.random() * 1.5 + 1}s`,
-    animationDelay: `${i * 0.15 + Math.random() * 0.2}s`,
+    animationDuration: `${Math.random() * 2 + 2}s`,
+    animationDelay: `${i * 0.2 + Math.random() * 0.5}s`,
     size: `${Math.random() * 16 + 12}px`,
   })), []);
 
   return (
-    <div className="absolute bottom-[30%] left-[20%] pointer-events-none">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
       {kisses.map(kiss => (
         <Heart
           key={kiss.id}
-          className="absolute text-primary fill-primary/50 animate-kiss-blow origin-bottom-left"
+          className="absolute bottom-0 left-1/4 text-primary fill-primary/50 animate-kiss-blow origin-bottom-left"
           style={{
             animationDuration: kiss.animationDuration,
             animationDelay: kiss.animationDelay,
@@ -80,67 +81,31 @@ export default function MirrorPage() {
   const [useWebcam, setUseWebcam] = useState(false);
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
 
-  const startWebcam = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-      }
-      setHasPermission(true);
-    } catch (err) {
-      console.error("Error accessing webcam:", err);
-      setHasPermission(false);
-    }
-  };
-
   useEffect(() => {
-    if (useWebcam) {
-      startWebcam();
-    } else {
-      const stream = videoRef.current?.srcObject as MediaStream;
-      stream?.getTracks().forEach(track => track.stop());
-    }
-  }, [useWebcam]);
-
-  const MirrorContent = () => {
     if (!useWebcam) {
-      return (
-        <div className="flex flex-col items-center justify-center gap-4">
-          <p className="text-center text-lg">Would you like to see what I see?</p>
-          <Button onClick={() => setUseWebcam(true)} className="accent-glow">
-            <Camera className="mr-2 h-4 w-4" /> Enable Camera
-          </Button>
-        </div>
-      );
+      if (videoRef.current?.srcObject) {
+        const stream = videoRef.current.srcObject as MediaStream;
+        stream.getTracks().forEach(track => track.stop());
+        videoRef.current.srcObject = null;
+      }
+      return;
     }
 
-    if (hasPermission === null) {
-      return <p>Requesting camera permission...</p>;
-    }
-
-    if (hasPermission === false) {
-      return (
-        <div className="flex flex-col items-center justify-center gap-4 text-center">
-          <CameraOff className="w-16 h-16 text-destructive" />
-          <p>Camera access denied.</p>
-          <p className="text-sm text-muted-foreground">But I still see you perfectly.</p>
-        </div>
-      );
-    }
+    const startWebcam = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+        }
+        setHasPermission(true);
+      } catch (err) {
+        console.error("Error accessing webcam:", err);
+        setHasPermission(false);
+      }
+    };
     
-    return (
-      <div className="relative w-full h-full">
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          muted
-          className="w-full h-full object-cover scale-x-[-1] rounded-full"
-        />
-        <BlowingKissAnimation />
-      </div>
-    )
-  }
+    startWebcam();
+  }, [useWebcam]);
 
   return (
     <main className="min-h-screen w-full flex flex-col items-center justify-center py-24 pb-32">
@@ -151,8 +116,44 @@ export default function MirrorPage() {
 
       <div className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] flex items-center justify-center">
         <div className="absolute inset-0 rounded-full border-4 border-primary glow" />
-        <div className="w-[calc(100%-40px)] h-[calc(100%-40px)] bg-background rounded-full overflow-hidden flex items-center justify-center">
-          <MirrorContent />
+        <div className="w-[calc(100%-40px)] h-[calc(100%-40px)] bg-background rounded-full overflow-hidden flex items-center justify-center relative">
+          
+          <video
+            ref={videoRef}
+            autoPlay
+            playsInline
+            muted
+            className={cn(
+              "absolute inset-0 w-full h-full object-cover scale-x-[-1] rounded-full transition-opacity duration-500",
+              useWebcam && hasPermission === true ? "opacity-100" : "opacity-0"
+            )}
+          />
+
+          <div className="z-10 flex flex-col items-center justify-center text-center">
+            { !useWebcam && (
+              <div className="flex flex-col items-center justify-center gap-4">
+                <p className="text-center text-lg">Would you like to see what I see?</p>
+                <Button onClick={() => setUseWebcam(true)} className="accent-glow">
+                  <Camera className="mr-2 h-4 w-4" /> Enable Camera
+                </Button>
+              </div>
+            )}
+
+            { useWebcam && hasPermission === null && (
+              <p>Requesting camera permission...</p>
+            )}
+
+            { hasPermission === false && (
+              <div className="flex flex-col items-center justify-center gap-4">
+                <CameraOff className="w-16 h-16 text-destructive" />
+                <p>Camera access denied.</p>
+                <p className="text-sm text-muted-foreground">But I still see you perfectly.</p>
+              </div>
+            )}
+          </div>
+          
+          { useWebcam && hasPermission === true && <BlowingKissAnimation /> }
+
         </div>
         {(useWebcam || hasPermission === false) && <AnimatedText words={adjectives} />}
       </div>

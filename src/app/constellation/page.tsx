@@ -22,20 +22,20 @@ type Memory = {
 const memories: Memory[] = [
   // A
   { id: 1, title: 'Our First Call', content: 'The first time you said “mai he call krte hu” and that first WhatsApp call we had.', desktopPos: { top: '80%', left: '15%' }, mobilePos: { top: '45%', left: '20%' } },
-  { id: 2, title: 'A Long Chat', content: 'That day you were free, and I suddenly found you online — we chatted for a long time.', desktopPos: { top: '50%', left: '20%' }, mobilePos: { top: '25%', left: '30%' } },
+  { id: 2, title: 'A Long Chat', content: 'That day you were free, and I suddenly found you online — we chatted for a long time.', desktopPos: { top: '50%', left: '22%' }, mobilePos: { top: '25%', left: '30%' } },
   { id: 3, title: 'Opening Up', content: 'Me opening up — telling you the story of my past.', desktopPos: { top: '20%', left: '30%' }, mobilePos: { top: '10%', left: '50%' } },
-  { id: 4, title: 'First Words', content: 'Our first long conversation in chats.', desktopPos: { top: '50%', left: '40%' }, mobilePos: { top: '25%', left: '70%' } },
+  { id: 4, title: 'First Words', content: 'Our first long conversation in chats.', desktopPos: { top: '50%', left: '38%' }, mobilePos: { top: '25%', left: '70%' } },
   { id: 5, title: 'A New Routine', content: 'The beginning of our regular daily chats.', desktopPos: { top: '80%', left: '45%' }, mobilePos: { top: '45%', left: '80%' } },
-  { id: 6, title: 'Always on My Mind', content: 'Me thinking of you constantly, even during random moments.', desktopPos: { top: '65%', left: '30%' }, mobilePos: { top: '35%', left: '50%' } },
-  { id: 7, title: 'From Text to Voice', content: 'Our shift from chatting to a quick normal phone call.', desktopPos: { top: '35%', left: '25%' }, mobilePos: { top: '18%', left: '40%' } },
-  { id: 8, title: 'Endless Nights', content: 'Our long, long late-night talk that never seemed to end.', desktopPos: { top: '35%', left: '35%' }, mobilePos: { top: '18%', left: '60%' } },
+  { id: 6, title: 'Always on My Mind', content: 'Me thinking of you constantly, even during random moments.', desktopPos: { top: '50%', left: '30%' }, mobilePos: { top: '35%', left: '50%' } }, // Crossbar
+  { id: 7, title: 'From Text to Voice', content: 'Our shift from chatting to a quick normal phone call.', desktopPos: { top: '35%', left: '26%' }, mobilePos: { top: '18%', left: '40%' } },
+  { id: 8, title: 'Endless Nights', content: 'Our long, long late-night talk that never seemed to end.', desktopPos: { top: '35%', left: '34%' }, mobilePos: { top: '18%', left: '60%' } },
   // R
   { id: 9, title: 'It\'s Official', content: 'The moment we realized we were together.', desktopPos: { top: '20%', left: '60%' }, mobilePos: { top: '55%', left: '30%' } },
   { id: 10, title: 'Truly Me', content: 'When I told you everything — no filters, no fear.', desktopPos: { top: '80%', left: '60%' }, mobilePos: { top: '95%', left: '30%' } },
   { id: 11, title: 'Seeing You', content: 'Our very first video call.', desktopPos: { top: '25%', left: '75%' }, mobilePos: { top: '60%', left: '70%' } },
   { id: 12, title: 'A Special Name', content: 'Me saving your number with a special name.', desktopPos: { top: '45%', left: '78%' }, mobilePos: { top: '70%', left: '80%' } },
-  { id: 13, title: 'My Sunshine', content: 'When a message from you instantly changed my mood.', desktopPos: { top: '50%', left: '60%' }, mobilePos: { top: '75%', left: '30%' } },
-  { id: 14, title: 'The Little Things', content: 'When you said something small but it meant the world to me.', desktopPos: { top: '65%', left: '70%' }, mobilePos: { top: '85%', left: '50%' } },
+  { id: 13, title: 'My Sunshine', content: 'When a message from you instantly changed my mood.', desktopPos: { top: '50%', left: '68%' }, mobilePos: { top: '75%', left: '50%' } },
+  { id: 14, title: 'The Little Things', content: 'When you said something small but it meant the world to me.', desktopPos: { top: '65%', left: '70%' }, mobilePos: { top: '85%', left: '60%' } },
   { id: 15, title: 'Comfortable Silence', content: 'That moment we both were silent, but it felt so full.', desktopPos: { top: '80%', left: '80%' }, mobilePos: { top: '95%', left: '70%' } },
   { id: 16, title: 'A Deeper Connection', content: 'When I realized this wasn’t just talking — it was connection.', desktopPos: { top: '35%', left: '68%' }, mobilePos: { top: '65%', left: '50%' } },
 ];
@@ -147,7 +147,7 @@ export default function ConstellationPage() {
   return (
     <main className="min-h-screen w-full relative">
       <Starfield starCount={2000} className="opacity-50"/>
-      <div className="relative z-10 container mx-auto px-4 py-24 pb-32">
+      <div className="relative z-10 container mx-auto px-4 pt-16 pb-32">
         <PageTitle>Our Constellation</PageTitle>
         <p className="text-center font-body text-lg text-foreground/80 mb-8 animate-fade-in-up h-6">
           <Subtitle />

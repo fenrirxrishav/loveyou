@@ -116,8 +116,8 @@ export default function ConstellationPage() {
         } else if (revealedCount === memories.length && !isComplete) {
           setIsComplete(true);
           toast({
-            title: "Our Constellation is Complete!",
-            description: "You've lit up our entire universe of memories.",
+            title: "OK OK OK !",
+            description: "You have completed this sweetheart now there is more see below a button",
           });
         }
       }

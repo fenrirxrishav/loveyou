@@ -29,7 +29,7 @@ export function PageNavigation({ backLink, nextLink }: PageNavigationProps) {
           {nextLink && (
             <Link href={nextLink} passHref>
               <Button variant="outline" className="glow">
-                Next <ArrowRight className="ml-2 h-4 w-4" />
+                there is more bby <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
           )}

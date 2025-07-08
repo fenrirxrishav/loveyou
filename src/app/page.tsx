@@ -20,14 +20,14 @@ export default function Home() {
         </div>
 
         <h1 className="text-4xl md:text-6xl font-headline text-primary mb-4 text-glow animate-fade-in-down">
-          Starlight Serenade
+          Happy Birthday Sweetheart !!
         </h1>
         <p className="text-lg md:text-2xl font-body text-foreground/80 max-w-2xl mb-12 animate-fade-in-up">
-          In a universe of billions, only one star captured my heart — you.
+          The beginning of everything.
         </p>
         <Link href="/constellation" passHref>
           <Button size="lg" className="glow font-bold text-lg px-8 py-6">
-            Enter Your Universe
+            Come with me
           </Button>
         </Link>
       </div>

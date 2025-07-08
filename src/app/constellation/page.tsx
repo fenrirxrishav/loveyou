@@ -31,13 +31,13 @@ const memories: Memory[] = [
   { id: 8, title: 'Endless Nights', content: 'Our long, long late-night talk that never seemed to end.', desktopPos: { top: '35%', left: '34%' }, mobilePos: { top: '18%', left: '60%' } },
   // R
   { id: 9, title: 'It\'s Official', content: 'The moment we realized we were together.', desktopPos: { top: '20%', left: '60%' }, mobilePos: { top: '55%', left: '30%' } },
-  { id: 10, title: 'Truly Me', content: 'When I told you everything — no filters, no fear.', desktopPos: { top: '80%', left: '60%' }, mobilePos: { top: '95%', left: '30%' } },
-  { id: 11, title: 'Seeing You', content: 'Our very first video call.', desktopPos: { top: '25%', left: '75%' }, mobilePos: { top: '60%', left: '70%' } },
-  { id: 12, title: 'A Special Name', content: 'Me saving your number with a special name.', desktopPos: { top: '45%', left: '78%' }, mobilePos: { top: '70%', left: '80%' } },
-  { id: 13, title: 'My Sunshine', content: 'When a message from you instantly changed my mood.', desktopPos: { top: '50%', left: '68%' }, mobilePos: { top: '75%', left: '50%' } },
-  { id: 14, title: 'The Little Things', content: 'When you said something small but it meant the world to me.', desktopPos: { top: '65%', left: '70%' }, mobilePos: { top: '85%', left: '60%' } },
-  { id: 15, title: 'Comfortable Silence', content: 'That moment we both were silent, but it felt so full.', desktopPos: { top: '80%', left: '80%' }, mobilePos: { top: '95%', left: '70%' } },
-  { id: 16, title: 'A Deeper Connection', content: 'When I realized this wasn’t just talking — it was connection.', desktopPos: { top: '35%', left: '68%' }, mobilePos: { top: '65%', left: '50%' } },
+  { id: 10, title: 'Truly Me', content: 'When I told you everything — no filters, no fear.', desktopPos: { top: '50%', left: '60%' }, mobilePos: { top: '75%', left: '30%' } },
+  { id: 11, title: 'Seeing You', content: 'Our very first video call.', desktopPos: { top: '80%', left: '60%' }, mobilePos: { top: '95%', left: '30%' } },
+  { id: 12, title: 'A Special Name', content: 'Me saving your number with a special name.', desktopPos: { top: '25%', left: '75%' }, mobilePos: { top: '60%', left: '70%' } },
+  { id: 13, title: 'My Sunshine', content: 'When a message from you instantly changed my mood.', desktopPos: { top: '45%', left: '78%' }, mobilePos: { top: '70%', left: '80%' } },
+  { id: 14, title: 'The Little Things', content: 'When you said something small but it meant the world to me.', desktopPos: { top: '50%', left: '68%' }, mobilePos: { top: '75%', left: '50%' } },
+  { id: 15, title: 'Comfortable Silence', content: 'That moment we both were silent, but it felt so full.', desktopPos: { top: '65%', left: '70%' }, mobilePos: { top: '85%', left: '60%' } },
+  { id: 16, title: 'A Deeper Connection', content: 'When I realized this wasn’t just talking — it was connection.', desktopPos: { top: '80%', left: '80%' }, mobilePos: { top: '95%', left: '70%' } },
 ];
 
 

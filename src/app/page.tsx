@@ -1,13 +1,29 @@
 'use client';
 
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Starfield } from '@/components/starfield';
 import { Heart } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export default function Home() {
+  const router = useRouter();
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsNavigating(true);
+    setTimeout(() => {
+      router.push('/constellation');
+    }, 1200); // Duration of the zoom animation
+  };
+
   return (
-    <main className="relative flex flex-col items-center justify-center h-screen w-full overflow-hidden">
+    <main className={cn(
+      "relative flex flex-col items-center justify-center h-screen w-full overflow-hidden",
+      isNavigating && "animate-camera-zoom"
+    )}>
       <Starfield
         starCount={2000}
         starColor={[255, 255, 255]}
@@ -15,7 +31,7 @@ export default function Home() {
         backgroundColor="transparent"
       />
       <div className="relative z-10 flex flex-col items-center justify-center text-center p-4">
-        <div className="mb-8 animate-pulse">
+        <div className={cn("mb-8", isNavigating ? 'animate-heart-beat' : 'animate-pulse')}>
           <Heart className="w-24 h-24 text-primary fill-primary/20" style={{ filter: 'drop-shadow(0 0 15px hsl(var(--primary)))' }}/>
         </div>
 
@@ -25,11 +41,10 @@ export default function Home() {
         <p className="text-lg md:text-2xl font-body text-foreground/80 max-w-2xl mb-12 animate-fade-in-up">
           The beginning of everything.
         </p>
-        <Link href="/constellation" passHref>
-          <Button size="lg" className="glow font-bold text-lg px-8 py-6">
-            Come with me
-          </Button>
-        </Link>
+        
+        <Button size="lg" className="glow font-bold text-lg px-8 py-6" onClick={handleClick} disabled={isNavigating}>
+          Come with me
+        </Button>
       </div>
     </main>
   );

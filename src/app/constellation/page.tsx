@@ -4,7 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { PageTitle } from '@/components/page-title';
 import { PageNavigation } from '@/components/page-navigation';
 import { Card, CardContent } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogClose } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogClose, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Starfield } from '@/components/starfield';
@@ -183,6 +183,9 @@ export default function ConstellationPage() {
         <DialogContent className="max-w-md bg-background/80 backdrop-blur-lg">
           {selectedMemory && (
             <>
+              <DialogHeader>
+                <DialogTitle className="sr-only">A Memory</DialogTitle>
+              </DialogHeader>
               <DialogDescription className="text-primary text-xl font-body text-center text-glow py-6">
                 {selectedMemory.content}
               </DialogDescription>

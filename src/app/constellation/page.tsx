@@ -4,10 +4,12 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { PageTitle } from '@/components/page-title';
 import { PageNavigation } from '@/components/page-navigation';
 import { Card, CardContent } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Starfield } from '@/components/starfield';
 import { useToast } from '@/hooks/use-toast';
+import { Star as StarIcon } from 'lucide-react';
 
 type Memory = {
   id: number;
@@ -59,7 +61,9 @@ const Star = ({ memory, onClick, position, isGlowing, isClickable }: { memory: M
 const Line = ({ p1, p2 }: { p1: { top: string; left: string }; p2: { top: string; left: string } }) => {
   if (!p1 || !p2) return null;
   // Don't draw a line between the two letters
-  if (p1 === memories[7].desktopPos || p1 === memories[7].mobilePos) return null;
+  const p1Index = memories.findIndex(m => m.desktopPos === p1 || m.mobilePos === p1);
+  if (p1Index === 7) return null;
+
   return (
     <line
       x1={p1.left}
@@ -178,13 +182,21 @@ export default function ConstellationPage() {
       </div>
 
       <Dialog open={!!selectedMemory} onOpenChange={handleDialogChange}>
-        <DialogContent className="max-w-md bg-background/80 backdrop-blur-lg border-primary/50 glow">
+        <DialogContent className="memory-dialog max-w-md bg-background/80 backdrop-blur-lg border-primary/50">
           {selectedMemory && (
             <>
               <DialogHeader>
-                <DialogTitle className="font-headline text-2xl text-primary">{selectedMemory.title}</DialogTitle>
+                <DialogTitle className="font-headline text-2xl text-primary flex items-center justify-center gap-2 text-center">
+                  <StarIcon className="w-6 h-6 text-accent fill-accent" />
+                  {selectedMemory.title}
+                </DialogTitle>
               </DialogHeader>
-              <DialogDescription className="text-foreground text-base font-body py-4">{selectedMemory.content}</DialogDescription>
+              <DialogDescription className="text-foreground text-base font-body py-4 text-center">{selectedMemory.content}</DialogDescription>
+              <DialogFooter className="sm:justify-center">
+                <DialogClose asChild>
+                  <Button variant="link" className="text-primary text-lg">Right n</Button>
+                </DialogClose>
+              </DialogFooter>
             </>
           )}
         </DialogContent>

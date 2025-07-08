@@ -121,4 +121,12 @@ body {
       opacity: 0;
     }
   }
+
+  .memory-dialog > button.absolute {
+    @apply hidden;
+  }
+
+  .memory-dialog {
+    @apply rounded-3xl border-2;
+  }
 }

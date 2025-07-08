@@ -8,101 +8,30 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import Image from 'next/image';
 import { Starfield } from '@/components/starfield';
 
-const memories = [
-  // Letter A
-  {
-    id: 1,
-    title: "Apex of Our Story",
-    content: "The very peak, where our story began. It felt like destiny.",
-    position: { top: '20%', left: '25%' },
-    image: 'https://placehold.co/400x300',
-    aiHint: 'galaxy stars',
-  },
-  {
-    id: 2,
-    title: "Our First Foundation",
-    content: "The left pillar of our love, strong and true from our first meeting.",
-    position: { top: '80%', left: '15%' },
-    image: 'https://placehold.co/400x300',
-    aiHint: 'couple meeting',
-  },
-  {
-    id: 3,
-    title: "Our Second Foundation",
-    content: "The right pillar of our love, built on laughter and shared dreams.",
-    position: { top: '80%', left: '35%' },
-    image: 'https://placehold.co/400x300',
-    aiHint: 'couple laughing',
-  },
-  {
-    id: 4,
-    title: "The Connecting Bridge",
-    content: "This is the bridge that connects our hearts across any distance.",
-    position: { top: '55%', left: '20%' },
-    image: 'https://placehold.co/400x300',
-    aiHint: 'couple movie',
-  },
-  {
-    id: 5,
-    title: "Our Unbreakable Bond",
-    content: "And here our bond was sealed. Nothing can break this connection.",
-    position: { top: '55%', left: '30%' },
-    image: 'https://placehold.co/400x300',
-    aiHint: 'comforting smile',
-  },
-  // Letter R
-  {
-    id: 6,
-    title: "My Constant Star",
-    content: "You are the unwavering, constant star in my sky.",
-    position: { top: '20%', left: '55%' },
-    image: 'https://placehold.co/400x300',
-    aiHint: 'night sky',
-  },
-  {
-    id: 7,
-    title: "Grounded in Love",
-    content: "Your love keeps me grounded, always.",
-    position: { top: '80%', left: '55%' },
-    image: 'https://placehold.co/400x300',
-    aiHint: 'couple holding hands',
-  },
-  {
-    id: 8,
-    title: "The Circle of Us",
-    content: "The start of the beautiful, full circle of our love.",
-    position: { top: '20%', left: '70%' },
-    image: 'https://placehold.co/400x300',
-    aiHint: 'night talk',
-  },
-  {
-    id: 9,
-    title: "Our Embrace",
-    content: "How our lives curved to meet in a perfect embrace.",
-    position: { top: '40%', left: '75%' },
-    image: 'https://placehold.co/400x300',
-    aiHint: 'couple embrace',
-  },
-  {
-    id: 10,
-    title: "The Heart of it All",
-    content: "At the heart of it all, there is you. Always you.",
-    position: { top: '50%', left: '65%' },
-    image: 'https://placehold.co/400x300',
-    aiHint: 'romantic couple',
-  },
-  {
-    id: 11,
-    title: "Our Shared Path",
-    content: "From our love, a new path forward, one I walk joyfully with you.",
-    position: { top: '80%', left: '75%' },
-    image: 'https://placehold.co/400x300',
-    aiHint: 'couple walking',
-  },
+const memoriesA = [
+  { id: 1, title: "Our First Call", content: "The first time you said “mai he call krte hu” and that first WhatsApp call we had.", position: { top: '15%', left: '50%' }, image: 'https://placehold.co/400x300', aiHint: 'phone call' },
+  { id: 2, title: "Long Chat", content: "That day you were free, and I suddenly found you online — we chatted for a long time.", position: { top: '45%', left: '30%' }, image: 'https://placehold.co/400x300', aiHint: 'chat bubble' },
+  { id: 3, title: "Opening Up", content: "Me opening up — telling you the story of my past.", position: { top: '80%', left: '10%' }, image: 'https://placehold.co/400x300', aiHint: 'open book' },
+  { id: 4, title: "First Long Chat", content: "Our first long conversation in chats.", position: { top: '45%', left: '70%' }, image: 'https://placehold.co/400x300', aiHint: 'couple chatting' },
+  { id: 5, title: "Daily Chats", content: "The beginning of our regular daily chats.", position: { top: '80%', left: '90%' }, image: 'https://placehold.co/400x300', aiHint: 'calendar heart' },
+  { id: 6, title: "Thinking of You", content: "Me thinking of you constantly, even during random moments.", position: { top: '60%', left: '40%' }, image: 'https://placehold.co/400x300', aiHint: 'daydream thought' },
+  { id: 7, title: "From Chat to Call", content: "Our shift from chatting to a quick normal phone call.", position: { top: '60%', left: '60%' }, image: 'https://placehold.co/400x300', aiHint: 'phone icon' },
 ];
 
+const memoriesR = [
+  { id: 8, title: "Late Night Talks", content: "Our long, long late-night talk that never seemed to end.", position: { top: '15%', left: '20%' }, image: 'https://placehold.co/400x300', aiHint: 'moon stars' },
+  { id: 9, title: "Together", content: "The moment we realized we were together.", position: { top: '80%', left: '20%' }, image: 'https://placehold.co/400x300', aiHint: 'holding hands' },
+  { id: 10, title: "No Filters", content: "When I told you everything — no filters, no fear.", position: { top: '48%', left: '20%' }, image: 'https://placehold.co/400x300', aiHint: 'honesty trust' },
+  { id: 11, title: "First Video Call", content: "Our very first video call.", position: { top: '15%', left: '50%' }, image: 'https://placehold.co/400x300', aiHint: 'video call' },
+  { id: 12, title: "Special Name", content: "Me saving your number with a special name.", position: { top: '30%', left: '65%' }, image: 'https://placehold.co/400x300', aiHint: 'contact list' },
+  { id: 13, title: "Mood Changer", content: "When a message from you instantly changed my mood.", position: { top: '48%', left: '50%' }, image: 'https://placehold.co/400x300', aiHint: 'happy message' },
+  { id: 14, title: "It Meant the World", content: "When you said something small but it meant the world to me.", position: { top: '65%', left: '45%' }, image: 'https://placehold.co/400x300', aiHint: 'small gift' },
+  { id: 15, title: "Comfortable Silence", content: "That moment we both were silent, but it felt so full.", position: { top: '80%', left: '70%' }, image: 'https://placehold.co/400x300', aiHint: 'peaceful silence' },
+  { id: 16, title: "Connection", content: "When I realized this wasn’t just talking — it was connection.", position: { top: '48%', left: '35%' }, image: 'https://placehold.co/400x300', aiHint: 'spark connection' },
+];
 
-type Memory = (typeof memories)[0];
+const allMemories = [...memoriesA, ...memoriesR];
+type Memory = (typeof allMemories)[0];
 
 const Star = ({ memory, onClick }: { memory: Memory; onClick: (memory: Memory) => void }) => (
   <button
@@ -126,12 +55,21 @@ export default function ConstellationPage() {
         <p className="text-center font-body text-lg text-foreground/80 mb-8 animate-fade-in-up">
           Each star a memory, lighting up our universe. Click on a star to remember with me.
         </p>
-        <Card className="w-full h-[60vh] md:h-[70vh] relative overflow-hidden bg-transparent border-primary/20 shadow-lg shadow-primary/10">
+        <Card className="w-full h-[90vh] md:h-[70vh] relative overflow-hidden bg-transparent border-primary/20 shadow-lg shadow-primary/10">
           <CardContent className="p-0 h-full w-full">
             <div className="absolute inset-0 bg-gradient-to-br from-background via-indigo-950/30 to-background"></div>
-            {memories.map((memory) => (
-              <Star key={memory.id} memory={memory} onClick={setSelectedMemory} />
-            ))}
+            <div className="flex flex-col md:flex-row h-full w-full items-center justify-center md:gap-4">
+              <div className="relative w-full md:w-1/2 h-1/2 md:h-full">
+                {memoriesA.map((memory) => (
+                  <Star key={memory.id} memory={memory} onClick={setSelectedMemory} />
+                ))}
+              </div>
+              <div className="relative w-full md:w-1/2 h-1/2 md:h-full">
+                {memoriesR.map((memory) => (
+                  <Star key={memory.id} memory={memory} onClick={setSelectedMemory} />
+                ))}
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -151,7 +89,7 @@ export default function ConstellationPage() {
           )}
         </DialogContent>
       </Dialog>
-      <PageNavigation nextLink="/love-letters" />
+      <PageNavigation backLink="/" nextLink="/love-letters" />
     </main>
   );
 }

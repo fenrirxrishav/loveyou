@@ -24,18 +24,18 @@ const memories: Memory[] = [
   { id: 3, title: 'Opening Up', content: 'Me opening up — telling you the story of my past.', desktopPos: { top: '20%', left: '30%' }, mobilePos: { top: '10%', left: '50%' } },
   { id: 4, title: 'First Words', content: 'Our first long conversation in chats.', desktopPos: { top: '50%', left: '40%' }, mobilePos: { top: '25%', left: '70%' } },
   { id: 5, title: 'A New Routine', content: 'The beginning of our regular daily chats.', desktopPos: { top: '80%', left: '45%' }, mobilePos: { top: '45%', left: '80%' } },
-  { id: 6, title: 'Always on My Mind', content: 'Me thinking of you constantly, even during random moments.', desktopPos: { top: '65%', left: '38%' }, mobilePos: { top: '35%', left: '65%' } },
-  { id: 7, title: 'From Text to Voice', content: 'Our shift from chatting to a quick normal phone call.', desktopPos: { top: '65%', left: '22%' }, mobilePos: { top: '35%', left: '35%' } },
-  { id: 8, title: 'Endless Nights', content: 'Our long, long late-night talk that never seemed to end.', desktopPos: { top: '35%', left: '25%' }, mobilePos: { top: '18%', left: '40%' } },
+  { id: 6, title: 'Always on My Mind', content: 'Me thinking of you constantly, even during random moments.', desktopPos: { top: '65%', left: '30%' }, mobilePos: { top: '35%', left: '50%' } },
+  { id: 7, title: 'From Text to Voice', content: 'Our shift from chatting to a quick normal phone call.', desktopPos: { top: '35%', left: '25%' }, mobilePos: { top: '18%', left: '40%' } },
+  { id: 8, title: 'Endless Nights', content: 'Our long, long late-night talk that never seemed to end.', desktopPos: { top: '35%', left: '35%' }, mobilePos: { top: '18%', left: '60%' } },
   // R
-  { id: 9, title: 'It\'s Official', content: 'The moment we realized we were together.', desktopPos: { top: '20%', left: '60%' }, mobilePos: { top: '55%', left: '20%' } },
-  { id: 10, title: 'Truly Me', content: 'When I told you everything — no filters, no fear.', desktopPos: { top: '80%', left: '60%' }, mobilePos: { top: '90%', left: '20%' } },
-  { id: 11, title: 'Seeing You', content: 'Our very first video call.', desktopPos: { top: '20%', left: '75%' }, mobilePos: { top: '55%', left: '50%' } },
-  { id: 12, title: 'A Special Name', content: 'Me saving your number with a special name.', desktopPos: { top: '35%', left: '80%' }, mobilePos: { top: '62%', left: '60%' } },
-  { id: 13, title: 'My Sunshine', content: 'When a message from you instantly changed my mood.', desktopPos: { top: '50%', left: '75%' }, mobilePos: { top: '70%', left: '50%' } },
-  { id: 14, title: 'The Little Things', content: 'When you said something small but it meant the world to me.', desktopPos: { top: '50%', left: '65%' }, mobilePos: { top: '70%', left: '30%' } },
-  { id: 15, title: 'Comfortable Silence', content: 'That moment we both were silent, but it felt so full.', desktopPos: { top: '65%', left: '70%' }, mobilePos: { top: '80%', left: '40%' } },
-  { id: 16, title: 'A Deeper Connection', content: 'When I realized this wasn’t just talking — it was connection.', desktopPos: { top: '80%', left: '80%' }, mobilePos: { top: '90%', left: '60%' } },
+  { id: 9, title: 'It\'s Official', content: 'The moment we realized we were together.', desktopPos: { top: '20%', left: '60%' }, mobilePos: { top: '55%', left: '30%' } },
+  { id: 10, title: 'Truly Me', content: 'When I told you everything — no filters, no fear.', desktopPos: { top: '80%', left: '60%' }, mobilePos: { top: '95%', left: '30%' } },
+  { id: 11, title: 'Seeing You', content: 'Our very first video call.', desktopPos: { top: '25%', left: '75%' }, mobilePos: { top: '60%', left: '70%' } },
+  { id: 12, title: 'A Special Name', content: 'Me saving your number with a special name.', desktopPos: { top: '45%', left: '78%' }, mobilePos: { top: '70%', left: '80%' } },
+  { id: 13, title: 'My Sunshine', content: 'When a message from you instantly changed my mood.', desktopPos: { top: '50%', left: '60%' }, mobilePos: { top: '75%', left: '30%' } },
+  { id: 14, title: 'The Little Things', content: 'When you said something small but it meant the world to me.', desktopPos: { top: '65%', left: '70%' }, mobilePos: { top: '85%', left: '50%' } },
+  { id: 15, title: 'Comfortable Silence', content: 'That moment we both were silent, but it felt so full.', desktopPos: { top: '80%', left: '80%' }, mobilePos: { top: '95%', left: '70%' } },
+  { id: 16, title: 'A Deeper Connection', content: 'When I realized this wasn’t just talking — it was connection.', desktopPos: { top: '35%', left: '68%' }, mobilePos: { top: '65%', left: '50%' } },
 ];
 
 
@@ -56,17 +56,22 @@ const Star = ({ memory, onClick, position, isGlowing, isClickable }: { memory: M
   </button>
 );
 
-const Line = ({ p1, p2 }: { p1: { top: string; left: string }; p2: { top: string; left: string } }) => (
-  <line
-    x1={p1.left}
-    y1={p1.top}
-    x2={p2.left}
-    y2={p2.top}
-    className="stroke-primary/50 animate-fade-in-up"
-    strokeWidth="1.5"
-    strokeDasharray="4 4"
-  />
-);
+const Line = ({ p1, p2 }: { p1: { top: string; left: string }; p2: { top: string; left: string } }) => {
+  if (!p1 || !p2) return null;
+  // Don't draw a line between the two letters
+  if (p1 === memories[7].desktopPos || p1 === memories[7].mobilePos) return null;
+  return (
+    <line
+      x1={p1.left}
+      y1={p1.top}
+      x2={p2.left}
+      y2={p2.top}
+      className="stroke-primary/50 animate-fade-in-up"
+      strokeWidth="1.5"
+      strokeDasharray="4 4"
+    />
+  );
+}
 
 export default function ConstellationPage() {
   const [revealedCount, setRevealedCount] = useState(1);
@@ -87,7 +92,10 @@ export default function ConstellationPage() {
   const handleStarClick = (memory: Memory, index: number) => {
     if (index === revealedCount - 1) {
       setSelectedMemory(memory);
-    } else {
+    } else if (isComplete) {
+      setSelectedMemory(memory);
+    }
+    else {
        toast({
         title: "A story unfolds one star at a time",
         description: "Please click the glowing star to continue.",
@@ -170,7 +178,7 @@ export default function ConstellationPage() {
       </div>
 
       <Dialog open={!!selectedMemory} onOpenChange={handleDialogChange}>
-        <DialogContent className="max-w-md bg-card/80 backdrop-blur-lg border-primary/50">
+        <DialogContent className="max-w-md bg-background/80 backdrop-blur-lg border-primary/50 glow">
           {selectedMemory && (
             <>
               <DialogHeader>
@@ -181,7 +189,7 @@ export default function ConstellationPage() {
           )}
         </DialogContent>
       </Dialog>
-      <PageNavigation backLink="/" nextLink="/love-letters" />
+      <PageNavigation backLink="/" nextLink={isComplete ? "/love-letters" : undefined} />
     </main>
   );
 }

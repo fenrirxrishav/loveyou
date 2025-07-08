@@ -132,7 +132,7 @@ export default function ConstellationPage() {
     if (revealedCount === 1) {
       return "Our story begins. Click the first glowing star."
     }
-    return "Each star a memory, lighting up our universe. Click the glowing star."
+    return "Each star holds a memory. Click the glowing star to continue our story."
   }
 
   if (!isClient) {

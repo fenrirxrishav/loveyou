@@ -4,16 +4,14 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { PageTitle } from '@/components/page-title';
 import { PageNavigation } from '@/components/page-navigation';
 import { Card, CardContent } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Starfield } from '@/components/starfield';
 import { useToast } from '@/hooks/use-toast';
-import { Star as StarIcon } from 'lucide-react';
 
 type Memory = {
   id: number;
-  title: string;
   content: string;
   desktopPos: { top: string; left: string };
   mobilePos: { top:string; left: string };
@@ -21,23 +19,23 @@ type Memory = {
 
 const memories: Memory[] = [
   // A
-  { id: 1, title: 'Our First Call', content: 'The first time you said “mai he call krte hu” and that first WhatsApp call we had.', desktopPos: { top: '80%', left: '15%' }, mobilePos: { top: '45%', left: '20%' } },
-  { id: 2, title: 'A Long Chat', content: 'That day you were free, and I suddenly found you online — we chatted for a long time.', desktopPos: { top: '50%', left: '22%' }, mobilePos: { top: '25%', left: '30%' } },
-  { id: 3, title: 'Opening Up', content: 'Me opening up — telling you the story of my past.', desktopPos: { top: '20%', left: '30%' }, mobilePos: { top: '10%', left: '50%' } },
-  { id: 4, title: 'First Words', content: 'Our first long conversation in chats.', desktopPos: { top: '50%', left: '38%' }, mobilePos: { top: '25%', left: '70%' } },
-  { id: 5, title: 'A New Routine', content: 'The beginning of our regular daily chats.', desktopPos: { top: '80%', left: '45%' }, mobilePos: { top: '45%', left: '80%' } },
-  { id: 6, title: 'Always on My Mind', content: 'Me thinking of you constantly, even during random moments.', desktopPos: { top: '50%', left: '30%' }, mobilePos: { top: '35%', left: '50%' } }, // Crossbar
-  { id: 7, title: 'From Text to Voice', content: 'Our shift from chatting to a quick normal phone call.', desktopPos: { top: '35%', left: '26%' }, mobilePos: { top: '18%', left: '40%' } },
-  { id: 8, title: 'Endless Nights', content: 'Our long, long late-night talk that never seemed to end.', desktopPos: { top: '35%', left: '34%' }, mobilePos: { top: '18%', left: '60%' } },
+  { id: 1, content: 'The first time you said “mai he call krte hu” and that first WhatsApp call we had.', desktopPos: { top: '80%', left: '15%' }, mobilePos: { top: '45%', left: '20%' } },
+  { id: 2, content: 'That day you were free, and I suddenly found you online — we chatted for a long time.', desktopPos: { top: '50%', left: '22%' }, mobilePos: { top: '25%', left: '30%' } },
+  { id: 3, content: 'Me opening up — telling you the story of my past.', desktopPos: { top: '20%', left: '30%' }, mobilePos: { top: '10%', left: '50%' } },
+  { id: 4, content: 'Our first long conversation in chats.', desktopPos: { top: '50%', left: '38%' }, mobilePos: { top: '25%', left: '70%' } },
+  { id: 5, content: 'The beginning of our regular daily chats.', desktopPos: { top: '80%', left: '45%' }, mobilePos: { top: '45%', left: '80%' } },
+  { id: 6, content: 'Me thinking of you constantly, even during random moments.', desktopPos: { top: '50%', left: '30%' }, mobilePos: { top: '35%', left: '50%' } }, // Crossbar
+  { id: 7, content: 'Our shift from chatting to a quick normal phone call.', desktopPos: { top: '35%', left: '26%' }, mobilePos: { top: '18%', left: '40%' } },
+  { id: 8, content: 'Our long, long late-night talk that never seemed to end.', desktopPos: { top: '35%', left: '34%' }, mobilePos: { top: '18%', left: '60%' } },
   // R
-  { id: 9, title: 'It\'s Official', content: 'The moment we realized we were together.', desktopPos: { top: '20%', left: '60%' }, mobilePos: { top: '55%', left: '30%' } },
-  { id: 10, title: 'Truly Me', content: 'When I told you everything — no filters, no fear.', desktopPos: { top: '50%', left: '60%' }, mobilePos: { top: '75%', left: '30%' } },
-  { id: 11, title: 'Seeing You', content: 'Our very first video call.', desktopPos: { top: '80%', left: '60%' }, mobilePos: { top: '95%', left: '30%' } },
-  { id: 12, title: 'A Special Name', content: 'Me saving your number with a special name.', desktopPos: { top: '25%', left: '75%' }, mobilePos: { top: '60%', left: '70%' } },
-  { id: 13, title: 'My Sunshine', content: 'When a message from you instantly changed my mood.', desktopPos: { top: '45%', left: '78%' }, mobilePos: { top: '70%', left: '80%' } },
-  { id: 14, title: 'The Little Things', content: 'When you said something small but it meant the world to me.', desktopPos: { top: '50%', left: '68%' }, mobilePos: { top: '75%', left: '50%' } },
-  { id: 15, title: 'Comfortable Silence', content: 'That moment we both were silent, but it felt so full.', desktopPos: { top: '65%', left: '70%' }, mobilePos: { top: '85%', left: '60%' } },
-  { id: 16, title: 'A Deeper Connection', content: 'When I realized this wasn’t just talking — it was connection.', desktopPos: { top: '80%', left: '80%' }, mobilePos: { top: '95%', left: '70%' } },
+  { id: 9, content: 'The moment we realized we were together.', desktopPos: { top: '20%', left: '60%' }, mobilePos: { top: '55%', left: '30%' } },
+  { id: 10, content: 'When I told you everything — no filters, no fear.', desktopPos: { top: '50%', left: '60%' }, mobilePos: { top: '75%', left: '30%' } },
+  { id: 11, content: 'Our very first video call.', desktopPos: { top: '80%', left: '60%' }, mobilePos: { top: '95%', left: '30%' } },
+  { id: 12, content: 'Me saving your number with a special name.', desktopPos: { top: '25%', left: '75%' }, mobilePos: { top: '60%', left: '70%' } },
+  { id: 13, content: 'When a message from you instantly changed my mood.', desktopPos: { top: '45%', left: '78%' }, mobilePos: { top: '70%', left: '80%' } },
+  { id: 14, content: 'When you said something small but it meant the world to me.', desktopPos: { top: '50%', left: '68%' }, mobilePos: { top: '75%', left: '50%' } },
+  { id: 15, content: 'That moment we both were silent, but it felt so full.', desktopPos: { top: '65%', left: '70%' }, mobilePos: { top: '85%', left: '60%' } },
+  { id: 16, content: 'When I realized this wasn’t just talking — it was connection.', desktopPos: { top: '80%', left: '80%' }, mobilePos: { top: '95%', left: '70%' } },
 ];
 
 
@@ -47,7 +45,7 @@ const Star = ({ memory, onClick, position, isGlowing, isClickable }: { memory: M
     style={{ top: position.top, left: position.left, transform: 'translate(-50%, -50%)', zIndex: 10 }}
     onClick={onClick}
     disabled={!isClickable}
-    aria-label={`Open memory: ${memory.title}`}
+    aria-label={`Open memory: ${memory.content}`}
   >
     <div className={cn(
       "w-5 h-5 bg-accent rounded-full transition-all duration-300",
@@ -147,7 +145,7 @@ export default function ConstellationPage() {
   return (
     <main className="min-h-screen w-full relative">
       <Starfield starCount={2000} className="opacity-50"/>
-      <div className="relative z-10 container mx-auto px-4 pt-16 pb-32">
+      <div className="relative z-10 container mx-auto px-4 py-16 pb-32">
         <PageTitle>Our Constellation</PageTitle>
         <p className="text-center font-body text-lg text-foreground/80 mb-8 animate-fade-in-up h-6">
           <Subtitle />
@@ -182,16 +180,12 @@ export default function ConstellationPage() {
       </div>
 
       <Dialog open={!!selectedMemory} onOpenChange={handleDialogChange}>
-        <DialogContent className="hide-close-button clip-star max-w-md bg-background/80 backdrop-blur-lg p-20 border-none">
+        <DialogContent className="max-w-md bg-background/80 backdrop-blur-lg">
           {selectedMemory && (
             <>
-              <DialogHeader>
-                <DialogTitle className="font-headline text-2xl text-primary flex items-center justify-center gap-2 text-center">
-                  <StarIcon className="w-6 h-6 text-accent fill-accent" />
-                  {selectedMemory.title}
-                </DialogTitle>
-              </DialogHeader>
-              <DialogDescription className="text-foreground text-base font-body py-4 text-center">{selectedMemory.content}</DialogDescription>
+              <DialogDescription className="text-primary text-xl font-body text-center text-glow py-6">
+                {selectedMemory.content}
+              </DialogDescription>
               <DialogFooter className="sm:justify-center">
                 <DialogClose asChild>
                   <Button variant="default">okay</Button>

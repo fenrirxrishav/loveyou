@@ -182,7 +182,7 @@ export default function ConstellationPage() {
       </div>
 
       <Dialog open={!!selectedMemory} onOpenChange={handleDialogChange}>
-        <DialogContent className="memory-dialog max-w-md bg-background/80 backdrop-blur-lg border-primary/50">
+        <DialogContent className="hide-close-button clip-star max-w-md bg-background/80 backdrop-blur-lg p-20 border-none">
           {selectedMemory && (
             <>
               <DialogHeader>
@@ -194,7 +194,7 @@ export default function ConstellationPage() {
               <DialogDescription className="text-foreground text-base font-body py-4 text-center">{selectedMemory.content}</DialogDescription>
               <DialogFooter className="sm:justify-center">
                 <DialogClose asChild>
-                  <Button variant="link" className="text-primary text-lg">Right n</Button>
+                  <Button variant="default">okay</Button>
                 </DialogClose>
               </DialogFooter>
             </>

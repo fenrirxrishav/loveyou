@@ -5,6 +5,7 @@ import { PageNavigation } from '@/components/page-navigation';
 import { Button } from '@/components/ui/button';
 import { Camera, CameraOff, Heart } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { BirthdayCelebration } from '@/components/birthday-celebration';
 
 const adjectives = ["Stunning", "Kind", "Funny", "My Safe Place", "My Always", "My Everything"];
 
@@ -152,7 +153,12 @@ export default function MirrorPage() {
             )}
           </div>
           
-          { useWebcam && hasPermission === true && <BlowingKissAnimation /> }
+          { useWebcam && hasPermission === true && (
+            <>
+              <BlowingKissAnimation />
+              <BirthdayCelebration />
+            </>
+           )}
 
         </div>
         {(useWebcam || hasPermission === false) && <AnimatedText words={adjectives} />}

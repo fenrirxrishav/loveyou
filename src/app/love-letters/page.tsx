@@ -6,10 +6,12 @@ import { PageNavigation } from '@/components/page-navigation';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle, Circle, Lock } from 'lucide-react';
+import { CheckCircle, Circle, Lock, KeyRound } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useToast } from '@/hooks/use-toast';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 
 type StoryPhase = {
@@ -57,10 +59,16 @@ const storyChapters: StoryChapter[] = [
   },
 ];
 
+const secretLetterPassword = "senior";
+
 export default function StoryOfOursPage() {
   const [activeChapter, setActiveChapter] = useState<StoryChapter | null>(null);
   const [currentPhase, setCurrentPhase] = useState(0);
   const [completedChapters, setCompletedChapters] = useState<number[]>([]);
+  const [isPasswordDialogOpen, setIsPasswordDialogOpen] = useState(false);
+  const [passwordInput, setPasswordInput] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [isSecretLetterOpen, setIsSecretLetterOpen] = useState(false);
   const { toast } = useToast();
 
   const handleChapterClick = (chapter: StoryChapter) => {
@@ -90,7 +98,20 @@ export default function StoryOfOursPage() {
     setActiveChapter(null);
   }
 
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passwordInput === secretLetterPassword) {
+      setIsPasswordDialogOpen(false);
+      setPasswordError("");
+      setPasswordInput("");
+      setIsSecretLetterOpen(true);
+    } else {
+      setPasswordError("That's not it, try again sweetheart.");
+    }
+  };
+
   const allChaptersCompleted = completedChapters.length === storyChapters.length;
+  const allStepsCompleted = allChaptersCompleted && isSecretLetterOpen;
 
   return (
     <div className="min-h-screen w-full" style={{
@@ -128,9 +149,22 @@ export default function StoryOfOursPage() {
               </Card>
             )
            })}
+
+          {allChaptersCompleted && (
+             <Card
+                onClick={() => setIsPasswordDialogOpen(true)}
+                className="bg-card/50 backdrop-blur-sm border-accent/40 transition-all duration-300 shadow-lg cursor-pointer hover:border-accent/70 hover:bg-card/70 hover:shadow-accent/20 animate-fade-in-up"
+              >
+                <CardContent className="p-6 flex items-center justify-between">
+                  <h2 className="text-2xl font-headline text-accent/90">A Secret Letter</h2>
+                  <KeyRound className="w-8 h-8 text-accent/80" />
+                </CardContent>
+              </Card>
+          )}
         </div>
       </main>
 
+      {/* Chapter Dialog */}
       <Dialog open={!!activeChapter} onOpenChange={(isOpen) => !isOpen && handleDialogClose()}>
         <DialogContent className="bg-card/80 backdrop-blur-lg border-primary/50 max-w-lg">
           {activeChapter && (
@@ -166,7 +200,57 @@ export default function StoryOfOursPage() {
           )}
         </DialogContent>
       </Dialog>
-      <PageNavigation backLink="/constellation" nextLink={allChaptersCompleted ? "/soundtrack" : undefined} />
+      
+      {/* Password Dialog */}
+      <Dialog open={isPasswordDialogOpen} onOpenChange={setIsPasswordDialogOpen}>
+        <DialogContent className="bg-card/80 backdrop-blur-lg border-primary/50 max-w-sm">
+           <DialogHeader>
+              <DialogTitle className="font-headline text-2xl text-primary">Unlock the Secret</DialogTitle>
+               <DialogDescription>
+                A special word, just between us.
+              </DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handlePasswordSubmit} className="space-y-4 pt-2">
+               <div className="grid w-full items-center gap-1.5">
+                  <Label htmlFor="password">Password</Label>
+                  <Input 
+                    id="password" 
+                    type="password" 
+                    value={passwordInput}
+                    onChange={(e) => setPasswordInput(e.target.value)}
+                    placeholder="Enter the password"
+                  />
+               </div>
+               {passwordError && <p className="text-destructive text-sm">{passwordError}</p>}
+               <DialogFooter>
+                  <Button type="submit">Unlock</Button>
+               </DialogFooter>
+            </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Secret Letter Dialog */}
+       <Dialog open={isSecretLetterOpen} onOpenChange={setIsSecretLetterOpen}>
+        <DialogContent className="bg-card/80 backdrop-blur-lg border-primary/50 max-w-lg">
+            <DialogHeader>
+              <DialogTitle className="font-headline text-3xl text-primary text-glow">My Dearest,</DialogTitle>
+            </DialogHeader>
+            <ScrollArea className="h-64 my-4 pr-4">
+              <div className="space-y-6 font-body text-lg text-foreground/90 leading-relaxed">
+                 <p>This is where your secret, heartfelt letter will go.</p>
+                 <p>You can write anything you want here, a memory, a promise, or just a simple 'I love you' that's meant only for her eyes after she's journeyed through your story.</p>
+              </div>
+            </ScrollArea>
+            <DialogFooter>
+               <DialogClose asChild>
+                  <Button>I love you</Button>
+               </DialogClose>
+            </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+
+      <PageNavigation backLink="/constellation" nextLink={allStepsCompleted ? "/soundtrack" : undefined} />
     </div>
   );
 }

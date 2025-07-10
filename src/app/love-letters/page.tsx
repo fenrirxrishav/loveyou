@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { PageTitle } from '@/components/page-title';
 import { PageNavigation } from '@/components/page-navigation';
 import { Button } from '@/components/ui/button';
@@ -77,6 +77,16 @@ export default function StoryOfOursPage() {
   const [passwordError, setPasswordError] = useState("");
   const [isSecretLetterOpen, setIsSecretLetterOpen] = useState(false);
   const { toast } = useToast();
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollAreaRef.current) {
+      scrollAreaRef.current.scrollTo({
+        top: scrollAreaRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  }, [currentPhase]);
 
   const handleChapterClick = (chapter: StoryChapter) => {
     const isUnlocked = chapter.id === 1 || completedChapters.includes(chapter.id - 1);
@@ -189,7 +199,7 @@ export default function StoryOfOursPage() {
               <DialogHeader>
                 <DialogTitle className="font-headline text-3xl text-primary text-glow">{activeChapter.title}</DialogTitle>
               </DialogHeader>
-              <ScrollArea className="h-64 my-4 pr-4">
+              <ScrollArea className="h-64 my-4 pr-4" viewportRef={scrollAreaRef}>
                 <div className="space-y-6">
                   {activeChapter.phases.slice(0, currentPhase + 1).map((phase, index) => (
                      <DialogDescription

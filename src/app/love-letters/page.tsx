@@ -29,8 +29,15 @@ const storyChapters: StoryChapter[] = [
     id: 1,
     title: "Before You, There Was Noise",
     phases: [
-      { content: "This is the story of how my world was before you. A beautiful chaos, but noise nonetheless." },
-      { content: "Every day was a blur of moments, loud and bright, but lacking a certain melody." },
+      { content: "Life was loud — not in the kind of way that fills you, but in the way that drowns things out." },
+      { content: "The days were busy, but empty. Always something happening — notifications buzzing, reels playing on loop, half-finished conversations in group chats, laughter that echoed but never landed. I was surrounded by people, and yet, I don’t remember feeling truly seen by any of them. Everything was fast, disposable, forgettable." },
+      { content: "Back then, I didn’t really think about much. I didn’t reflect, I didn’t pause — I just flowed with whatever the day threw at me. My emotions? Muted. My thoughts? Scattered. My life? A series of moments stitched together by habit more than intention." },
+      { content: "There were jokes — lots of them. The kind that fill timelines, not hearts. There was banter — loud, chaotic, meaningless. We called it “fun,” but it never really stayed with me. Just fleeting bursts of distraction that disappeared as quickly as they came. Backchodi, memes, group calls, random plans that never happened — the usual." },
+      { content: "But nothing felt real. Not deeply. I didn’t crave connection. I didn’t look forward to any message. I never thought twice before replying. Conversations were mostly noise — hollow words to fill silence. I didn’t even notice how emotionally unavailable I had become… not just to others, but to myself." },
+      { content: "I didn’t write long messages. I didn’t sit with my feelings. I didn’t care enough to. And honestly, it wasn’t sad. It wasn’t some dramatic loneliness. It was just — numb. Like a static buzz in the background. Life felt like a playlist on shuffle: loud tracks, random skips, no rhythm." },
+      { content: "I was moving, but not going anywhere." },
+      { content: "And then you came along. Quietly. No big entrance. No cliché moment. Just a simple conversation. A few texts. A random emoji. A weird inside joke that didn’t make sense, but somehow stuck." },
+      { content: "And suddenly, the noise didn’t feel so loud anymore." },
     ],
   },
   {
@@ -111,7 +118,6 @@ export default function StoryOfOursPage() {
   };
 
   const allChaptersCompleted = completedChapters.length === storyChapters.length;
-  const allStepsCompleted = allChaptersCompleted && isSecretLetterOpen;
 
   return (
     <div className="min-h-screen w-full" style={{
@@ -203,7 +209,7 @@ export default function StoryOfOursPage() {
                   <Button onClick={handleNextPhase} variant="secondary">Continue...</Button>
                 ) : (
                   <DialogClose asChild>
-                    <Button onClick={handleDialogClose}>Finish Chapter</Button>
+                    <Button onClick={handleDialogClose}>ok ab next</Button>
                   </DialogClose>
                 )}
               </DialogFooter>
@@ -261,7 +267,7 @@ export default function StoryOfOursPage() {
       </Dialog>
 
 
-      <PageNavigation backLink="/constellation" nextLink={allStepsCompleted ? "/soundtrack" : undefined} />
+      <PageNavigation backLink="/constellation" nextLink={allChaptersCompleted ? "/soundtrack" : undefined} />
     </div>
   );
 }

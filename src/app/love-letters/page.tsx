@@ -6,9 +6,11 @@ import { PageNavigation } from '@/components/page-navigation';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '@/components/ui/dialog';
 import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle, Circle } from 'lucide-react';
+import { CheckCircle, Circle, Lock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { useToast } from '@/hooks/use-toast';
+
 
 type StoryPhase = {
   content: string;
@@ -23,28 +25,34 @@ type StoryChapter = {
 const storyChapters: StoryChapter[] = [
   {
     id: 1,
-    title: "When I First Saw You",
+    title: "Before You, There Was Noise",
     phases: [
-      { content: "Phase 1: Placeholder for the first part of your story about seeing her." },
-      { content: "Phase 2: Placeholder for the next part of the story." },
-      { content: "Phase 3: Placeholder for the concluding thoughts on that first moment." },
+      { content: "This is the story of how my world was before you. A beautiful chaos, but noise nonetheless." },
+      { content: "Every day was a blur of moments, loud and bright, but lacking a certain melody." },
     ],
   },
   {
     id: 2,
-    title: "Why I Love You",
+    title: "The Shift I Didn’t Notice (But Felt Deeply)",
     phases: [
-      { content: "Phase 1: Placeholder for the beginning of why you love her." },
-      { content: "Phase 2: Placeholder for more reasons and examples." },
+      { content: "Then, you came along. It wasn't a sudden storm, but a quiet, gentle sunrise I almost missed." },
+      { content: "The noise began to fade, replaced by a hum of anticipation whenever you were near." },
     ],
   },
   {
     id: 3,
-    title: "What I Want for Us",
+    title: "I Was Falling, But You Were Already There",
     phases: [
-      { content: "Phase 1: Placeholder for your dreams about your future together." },
-      { content: "Phase 2: Placeholder for more hopes and promises." },
-      { content: "Phase 3: Placeholder for the final, heartfelt wish for your relationship." },
+      { content: "I found myself thinking of you, re-reading your messages, smiling at the memory of your voice." },
+      { content: "It wasn't a fall, but a realization. I wasn't falling into love; I was arriving home, and you were waiting." },
+    ],
+  },
+    {
+    id: 4,
+    title: "This Isn’t Perfect — It’s Ours",
+    phases: [
+      { content: "Our story isn't a flawless fairy tale. It's better. It's real." },
+      { content: "It's made of laughter, late-night talks, inside jokes, and the quiet understanding that this is our forever." },
     ],
   },
 ];
@@ -53,10 +61,20 @@ export default function StoryOfOursPage() {
   const [activeChapter, setActiveChapter] = useState<StoryChapter | null>(null);
   const [currentPhase, setCurrentPhase] = useState(0);
   const [completedChapters, setCompletedChapters] = useState<number[]>([]);
+  const { toast } = useToast();
 
   const handleChapterClick = (chapter: StoryChapter) => {
-    setActiveChapter(chapter);
-    setCurrentPhase(0);
+    const isUnlocked = chapter.id === 1 || completedChapters.includes(chapter.id - 1);
+    
+    if (isUnlocked) {
+      setActiveChapter(chapter);
+      setCurrentPhase(0);
+    } else {
+       toast({
+        title: "A story unfolds in its own time.",
+        description: "Please complete the previous chapter to continue.",
+      });
+    }
   };
 
   const handleNextPhase = () => {
@@ -85,22 +103,31 @@ export default function StoryOfOursPage() {
         </p>
 
         <div className="max-w-2xl mx-auto space-y-6">
-          {storyChapters.map((chapter) => (
-            <Card
-              key={chapter.id}
-              onClick={() => handleChapterClick(chapter)}
-              className="bg-card/50 backdrop-blur-sm border-primary/20 hover:border-primary/50 hover:bg-card/70 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-primary/20"
-            >
-              <CardContent className="p-6 flex items-center justify-between">
-                <h2 className="text-2xl font-headline text-primary/90">{chapter.title}</h2>
-                {completedChapters.includes(chapter.id) ? (
-                   <CheckCircle className="w-8 h-8 text-accent" />
-                ) : (
-                   <Circle className="w-8 h-8 text-primary/30" />
+          {storyChapters.map((chapter) => {
+             const isUnlocked = chapter.id === 1 || completedChapters.includes(chapter.id - 1);
+             const isCompleted = completedChapters.includes(chapter.id);
+            return (
+              <Card
+                key={chapter.id}
+                onClick={() => handleChapterClick(chapter)}
+                className={cn(
+                    "bg-card/50 backdrop-blur-sm border-primary/20 transition-all duration-300 shadow-lg",
+                    isUnlocked ? "cursor-pointer hover:border-primary/50 hover:bg-card/70 hover:shadow-primary/20" : "opacity-60 cursor-not-allowed",
                 )}
-              </CardContent>
-            </Card>
-          ))}
+              >
+                <CardContent className="p-6 flex items-center justify-between">
+                  <h2 className={cn("text-2xl font-headline", isUnlocked ? "text-primary/90" : "text-primary/40")}>{chapter.title}</h2>
+                  {isCompleted ? (
+                     <CheckCircle className="w-8 h-8 text-accent" />
+                  ) : isUnlocked ? (
+                     <Circle className="w-8 h-8 text-primary/30" />
+                  ) : (
+                     <Lock className="w-8 h-8 text-primary/30" />
+                  )}
+                </CardContent>
+              </Card>
+            )
+           })}
         </div>
       </main>
 

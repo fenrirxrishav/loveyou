@@ -38,7 +38,7 @@ export const BirthdayCelebration = () => {
 
     return (
         <div className="absolute inset-0 z-20 pointer-events-none flex items-center justify-center overflow-hidden">
-            <h2 className="text-4xl md:text-5xl font-headline text-accent text-glow animate-confetti-burst">
+            <h2 className="text-4xl md:text-5xl font-headline text-accent animate-text-burst">
                 Happy Birthday!
             </h2>
             {confetti.map(c => (

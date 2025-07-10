@@ -93,7 +93,7 @@ const storyChapters: StoryChapter[] = [
   },
 ];
 
-const secretLetterPassword = "guys";
+const secretLetterPassword = "senior";
 
 export default function StoryOfOursPage() {
   const [activeChapter, setActiveChapter] = useState<StoryChapter | null>(null);

@@ -1,32 +1,40 @@
+
 'use client';
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Starfield } from '@/components/starfield';
-import { Heart, Unlock } from 'lucide-react';
+import { Heart, Unlock, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 const PASSWORD = "guys";
+const STORAGE_KEY = "starlight_serenade_unlocked";
 
 export default function Home() {
   const router = useRouter();
   const [isNavigating, setIsNavigating] = useState(false);
   const [isLocked, setIsLocked] = useState(true);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [inputValue, setInputValue] = useState("");
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    // This will run once on mount to ensure the dialog is shown.
-    setIsLocked(true);
+    // This check runs only on the client side
+    const unlocked = localStorage.getItem(STORAGE_KEY);
+    if (unlocked === 'true') {
+      setIsLocked(false);
+    }
+    setIsCheckingAuth(false);
   }, []);
 
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (inputValue.toLowerCase() === PASSWORD) {
       setError(false);
+      localStorage.setItem(STORAGE_KEY, 'true');
       setIsLocked(false);
     } else {
       setError(true);
@@ -41,6 +49,20 @@ export default function Home() {
       router.push('/constellation');
     }, 1200); // Duration of the zoom animation
   };
+
+  if (isCheckingAuth) {
+    return (
+       <main className="relative flex flex-col items-center justify-center h-screen w-full overflow-hidden bg-background">
+         <Starfield
+          starCount={2000}
+          starColor={[255, 255, 255]}
+          speedFactor={0.05}
+          backgroundColor="transparent"
+        />
+        <Loader2 className="w-16 h-16 text-primary animate-spin" />
+       </main>
+    )
+  }
 
   if (isLocked) {
     return (

@@ -91,6 +91,10 @@ body {
   .accent-glow {
     animation: accent-glow 2.5s ease-in-out infinite;
   }
+  
+  .accent-glow-fast {
+    animation: accent-glow 1s ease-in-out infinite;
+  }
 
   @keyframes accent-glow {
     0%, 100% {

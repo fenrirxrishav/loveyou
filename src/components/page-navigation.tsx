@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 type PageNavigationProps = {
   backLink?: string;
@@ -25,7 +26,7 @@ export function PageNavigation({ backLink, nextLink }: PageNavigationProps) {
         <div>
           {nextLink && (
             <Link href={nextLink} passHref>
-              <Button variant="outline" className="accent-glow font-bold">
+              <Button variant="outline" className="accent-glow-fast font-bold">
                 Here bby <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>

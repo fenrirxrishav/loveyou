@@ -100,7 +100,7 @@ export default function StoryOfOursPage() {
 
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (passwordInput === secretLetterPassword) {
+    if (passwordInput.toLowerCase() === secretLetterPassword) {
       setIsPasswordDialogOpen(false);
       setPasswordError("");
       setPasswordInput("");
@@ -152,12 +152,23 @@ export default function StoryOfOursPage() {
 
           {allChaptersCompleted && (
              <Card
-                onClick={() => setIsPasswordDialogOpen(true)}
+                onClick={() => {
+                  if (isSecretLetterOpen) {
+                    // Re-open secret letter if already unlocked
+                    setIsSecretLetterOpen(true);
+                  } else {
+                    setIsPasswordDialogOpen(true);
+                  }
+                }}
                 className="bg-card/50 backdrop-blur-sm border-accent/40 transition-all duration-300 shadow-lg cursor-pointer hover:border-accent/70 hover:bg-card/70 hover:shadow-accent/20 animate-fade-in-up"
               >
                 <CardContent className="p-6 flex items-center justify-between">
                   <h2 className="text-2xl font-headline text-accent/90">A Secret Letter</h2>
-                  <KeyRound className="w-8 h-8 text-accent/80" />
+                   {isSecretLetterOpen ? (
+                     <CheckCircle className="w-8 h-8 text-accent" />
+                   ) : (
+                    <KeyRound className="w-8 h-8 text-accent/80" />
+                   )}
                 </CardContent>
               </Card>
           )}

@@ -4,124 +4,142 @@ import React, { useState } from 'react';
 import { PageTitle } from '@/components/page-title';
 import { PageNavigation } from '@/components/page-navigation';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useToast } from '@/hooks/use-toast';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '@/components/ui/dialog';
+import { Card, CardContent } from '@/components/ui/card';
+import { CheckCircle, Circle } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Separator } from '@/components/ui/separator';
 
-const SECRET_PASSWORD = "mylove"; // The password you'll share in real life
+type StoryPhase = {
+  content: string;
+};
 
-export default function LoveLettersPage() {
-  const [isSecretLetterOpen, setIsSecretLetterOpen] = useState(false);
-  const [password, setPassword] = useState('');
-  const [isUnlocked, setIsUnlocked] = useState(false);
-  const { toast } = useToast();
+type StoryChapter = {
+  id: number;
+  title: string;
+  phases: StoryPhase[];
+};
 
-  const handleUnlock = () => {
-    if (password.toLowerCase() === SECRET_PASSWORD) {
-      setIsUnlocked(true);
-    } else {
-      toast({
-        title: "Wrong Password",
-        description: "That's not it, my love. Try again.",
-        variant: "destructive",
-      });
-      setPassword('');
-    }
+const storyChapters: StoryChapter[] = [
+  {
+    id: 1,
+    title: "When I First Saw You",
+    phases: [
+      { content: "Phase 1: Placeholder for the first part of your story about seeing her." },
+      { content: "Phase 2: Placeholder for the next part of the story." },
+      { content: "Phase 3: Placeholder for the concluding thoughts on that first moment." },
+    ],
+  },
+  {
+    id: 2,
+    title: "Why I Love You",
+    phases: [
+      { content: "Phase 1: Placeholder for the beginning of why you love her." },
+      { content: "Phase 2: Placeholder for more reasons and examples." },
+    ],
+  },
+  {
+    id: 3,
+    title: "What I Want for Us",
+    phases: [
+      { content: "Phase 1: Placeholder for your dreams about your future together." },
+      { content: "Phase 2: Placeholder for more hopes and promises." },
+      { content: "Phase 3: Placeholder for the final, heartfelt wish for your relationship." },
+    ],
+  },
+];
+
+export default function StoryOfOursPage() {
+  const [activeChapter, setActiveChapter] = useState<StoryChapter | null>(null);
+  const [currentPhase, setCurrentPhase] = useState(0);
+  const [completedChapters, setCompletedChapters] = useState<number[]>([]);
+
+  const handleChapterClick = (chapter: StoryChapter) => {
+    setActiveChapter(chapter);
+    setCurrentPhase(0);
   };
 
-  const LetterChapter = ({ title, children }: { title: string, children: React.ReactNode }) => (
-    <div className="mb-12">
-      <h2 className="text-3xl font-headline text-amber-200/90 mb-4">{title}</h2>
-      <div className="font-body text-lg text-stone-300/90 leading-relaxed space-y-4">
-        {children}
-      </div>
-    </div>
-  );
+  const handleNextPhase = () => {
+    if (activeChapter && currentPhase < activeChapter.phases.length - 1) {
+      setCurrentPhase(currentPhase + 1);
+    }
+  };
+  
+  const handleDialogClose = () => {
+    if (activeChapter && !completedChapters.includes(activeChapter.id)) {
+      setCompletedChapters([...completedChapters, activeChapter.id]);
+    }
+    setActiveChapter(null);
+  }
+
+  const allChaptersCompleted = completedChapters.length === storyChapters.length;
 
   return (
     <div className="min-h-screen w-full" style={{
       backgroundImage: `radial-gradient(circle at top right, hsl(var(--primary) / 0.1), transparent 40%), radial-gradient(circle at bottom left, hsl(var(--accent) / 0.1), transparent 50%)`,
     }}>
       <main className="container mx-auto px-4 py-24 pb-32">
-        <PageTitle>Love Letters from the Heart</PageTitle>
+        <PageTitle>Story of Ours From My Heart</PageTitle>
         <p className="text-center font-body text-lg text-foreground/80 mb-12 animate-fade-in-up">
-          Words from my heart to yours, a testament to our story.
+          Each chapter holds a piece of our story. Click one to begin.
         </p>
 
-        <div className="max-w-4xl mx-auto bg-stone-900/50 rounded-lg shadow-2xl shadow-primary/10 border border-primary/20 backdrop-blur-sm">
-          <ScrollArea className="h-[60vh] p-8 md:p-12">
-            <div className="prose prose-invert">
-              <LetterChapter title="When I First Saw You">
-                <p>My Dearest,</p>
-                <p>They say some moments are etched in time, and the moment I first saw you is one of them. It wasn't just seeing you; it was a feeling of recognition, as if a part of my soul I never knew was missing had just walked into the room. The world became a little brighter that day.</p>
-              </LetterChapter>
-
-              <Separator className="my-8 bg-primary/20" />
-
-              <LetterChapter title="Why I Love You">
-                <p>It’s in the way you laugh, a sound that could calm any storm within me. It's your kindness, a gentle force that makes the world a better place. It’s your strength, the quiet resilience that inspires me every day. I love you for all that you are, and all that you're yet to be.</p>
-              </LetterChapter>
-              
-              <Separator className="my-8 bg-primary/20" />
-
-              <LetterChapter title="What I Want for Us">
-                <p>I dream of a future filled with simple joys: morning coffees, lazy Sundays, and a lifetime of adventures, big and small. I want to build a haven with you, a place where we are always safe, always cherished, and always home.</p>
-                <p>Love always,</p>
-                <p>[Your Name]</p>
-              </LetterChapter>
-            </div>
-            
-            <div className="text-center mt-12">
-              <Button onClick={() => setIsSecretLetterOpen(true)} className="accent-glow">
-                Unlock a Secret Letter
-              </Button>
-            </div>
-          </ScrollArea>
+        <div className="max-w-2xl mx-auto space-y-6">
+          {storyChapters.map((chapter) => (
+            <Card
+              key={chapter.id}
+              onClick={() => handleChapterClick(chapter)}
+              className="bg-card/50 backdrop-blur-sm border-primary/20 hover:border-primary/50 hover:bg-card/70 transition-all duration-300 cursor-pointer shadow-lg hover:shadow-primary/20"
+            >
+              <CardContent className="p-6 flex items-center justify-between">
+                <h2 className="text-2xl font-headline text-primary/90">{chapter.title}</h2>
+                {completedChapters.includes(chapter.id) ? (
+                   <CheckCircle className="w-8 h-8 text-accent" />
+                ) : (
+                   <Circle className="w-8 h-8 text-primary/30" />
+                )}
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </main>
 
-      <Dialog open={isSecretLetterOpen} onOpenChange={setIsSecretLetterOpen}>
-        <DialogContent className="bg-card/80 backdrop-blur-lg border-primary/50">
-          <DialogHeader>
-            <DialogTitle className="font-headline text-2xl text-primary">A Secret Note</DialogTitle>
-          </DialogHeader>
-          {isUnlocked ? (
-            <div>
-              <DialogDescription className="my-4 text-lg text-foreground font-body">
-                My promise to you: To always choose you, to always love you, and to build a universe with you that's even more beautiful than the stars. This is just the beginning.
-              </DialogDescription>
-              <DialogFooter>
-                <Button onClick={() => setIsSecretLetterOpen(false)}>Close</Button>
-              </DialogFooter>
-            </div>
-          ) : (
-            <div>
-              <DialogDescription className="my-4 text-foreground">
-                I've hidden a special promise here. Whisper the secret word to me.
-              </DialogDescription>
-              <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="password" className="text-right text-foreground">Password</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="col-span-3"
-                  />
+      <Dialog open={!!activeChapter} onOpenChange={(isOpen) => !isOpen && handleDialogClose()}>
+        <DialogContent className="bg-card/80 backdrop-blur-lg border-primary/50 max-w-lg">
+          {activeChapter && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="font-headline text-3xl text-primary text-glow">{activeChapter.title}</DialogTitle>
+              </DialogHeader>
+              <ScrollArea className="h-64 my-4 pr-4">
+                <div className="space-y-6">
+                  {activeChapter.phases.slice(0, currentPhase + 1).map((phase, index) => (
+                     <DialogDescription
+                        key={index}
+                        className={cn(
+                          "font-body text-lg text-foreground/90 leading-relaxed animate-fade-in-up",
+                           index === currentPhase && "font-semibold text-foreground"
+                        )}
+                     >
+                       {phase.content}
+                     </DialogDescription>
+                  ))}
                 </div>
-              </div>
+              </ScrollArea>
               <DialogFooter>
-                <Button onClick={handleUnlock}>Unlock</Button>
+                {currentPhase < activeChapter.phases.length - 1 ? (
+                  <Button onClick={handleNextPhase} variant="secondary">Continue...</Button>
+                ) : (
+                  <DialogClose asChild>
+                    <Button onClick={handleDialogClose}>Finish Chapter</Button>
+                  </DialogClose>
+                )}
               </DialogFooter>
-            </div>
+            </>
           )}
         </DialogContent>
       </Dialog>
-      <PageNavigation backLink="/constellation" nextLink="/wish-garden" />
+      <PageNavigation backLink="/constellation" nextLink={allChaptersCompleted ? "/soundtrack" : undefined} />
     </div>
   );
 }

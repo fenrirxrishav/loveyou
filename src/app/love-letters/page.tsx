@@ -93,7 +93,7 @@ const storyChapters: StoryChapter[] = [
   },
 ];
 
-const secretLetterPassword = "senior";
+const secretLetterPassword = "guys";
 
 export default function StoryOfOursPage() {
   const [activeChapter, setActiveChapter] = useState<StoryChapter | null>(null);
@@ -180,7 +180,9 @@ export default function StoryOfOursPage() {
                 )}
               >
                 <CardContent className="p-6 flex items-center justify-between">
-                  <h2 className={cn("text-2xl font-headline", isUnlocked ? "text-primary/90" : "text-primary/40")}>{chapter.title}</h2>
+                  <h2 className={cn("text-2xl font-headline", isUnlocked ? "text-primary/90" : "text-primary/40")}>
+                    {isUnlocked ? chapter.title : `Chapter ${chapter.id}`}
+                  </h2>
                   {isCompleted ? (
                      <CheckCircle className="w-8 h-8 text-accent" />
                   ) : isUnlocked ? (
@@ -261,7 +263,7 @@ export default function StoryOfOursPage() {
            <DialogHeader>
               <DialogTitle className="font-headline text-2xl text-primary">Unlock the Secret</DialogTitle>
                <DialogDescription>
-                A special word, just between us.
+                something that you always calls me 
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handlePasswordSubmit} className="space-y-4 pt-2">

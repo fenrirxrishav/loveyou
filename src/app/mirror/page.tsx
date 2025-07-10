@@ -158,7 +158,7 @@ export default function MirrorPage() {
         {(useWebcam || hasPermission === false) && <AnimatedText words={adjectives} />}
       </div>
       
-      <PageNavigation backLink="/wish-garden" nextLink="/surprise" />
+      <PageNavigation backLink="/love-letters" nextLink="/surprise" />
     </main>
   );
 }

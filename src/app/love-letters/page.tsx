@@ -306,7 +306,7 @@ export default function StoryOfOursPage() {
       </Dialog>
 
 
-      <PageNavigation backLink="/constellation" nextLink={allChaptersCompleted ? "/soundtrack" : undefined} />
+      <PageNavigation backLink="/constellation" nextLink={allChaptersCompleted ? "/mirror" : undefined} />
     </div>
   );
 }

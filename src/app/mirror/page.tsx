@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { PageTitle } from '@/components/page-title';
 import { PageNavigation } from '@/components/page-navigation';
 import { Button } from '@/components/ui/button';
-import { Camera, CameraOff, Heart } from 'lucide-react';
+import { Camera, CameraOff } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { BirthdayCelebration } from '@/components/birthday-celebration';
 import { useToast } from '@/hooks/use-toast';
@@ -147,7 +147,7 @@ export default function MirrorPage() {
         {(useWebcam || hasPermission === false) && <AnimatedText words={adjectives} />}
       </div>
       
-      <PageNavigation backLink="/love-letters" nextLink="/constellation" />
+      <PageNavigation backLink="/love-letters" nextLink="/soundtrack" />
     </main>
   );
 }

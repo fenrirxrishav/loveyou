@@ -85,7 +85,7 @@ export default function SoundtrackPage() {
           </Card>
         </div>
       </main>
-      <PageNavigation backLink="/love-letters" nextLink="/wish-garden" />
+      <PageNavigation backLink="/mirror" nextLink="/wish-garden" />
     </div>
   );
 }

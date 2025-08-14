@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
@@ -294,7 +295,7 @@ export default function StoryOfOursPage() {
             <ScrollArea className="h-64 my-4 pr-4">
               <div className="space-y-6 font-body text-lg text-foreground/90 leading-relaxed select-none">
                  <p>Hey! sweetheart</p>
-                 <p>I know this might feel like a lot, but I wanted to say something. This letter was actually written a day before your birthday, and everything you’ve seen was something I had been building for months.</p>
+                 <p>I know this might feel like a lot, but I wanted to say something. This letter was actually written a day before your birthday, and everything you’veseen was something I had been building for months.</p>
                  <p>Lately, we haven’t been talking much. I don’t have a huge problem with that, but I really want to talk—especially to you. It feels like I’m losing you a little more every time we don’t talk, and when you ignore it, it honestly hurts.</p>
                  <p>This is a secret letter because I want to express my deepest feelings here. You know, all my friends keep telling me to move on, to hang out with someone else—it’s been three years, they say. I always tell them, “I’m already with someone,” and they know about you. They give me reality checks, sometimes taunt me, and I still stand by my choice.</p>
                  <p>But then something unexpected happened in my life, and it made me realize that I really do want someone—truly. And when I thought about it, I noticed how much our conversations have changed. They’ve become just… normal. Like I’m talking to some girl who knows me a little, but not deeply. Casual talk. I don’t want things to stay like that forever.</p>

@@ -1,96 +1,12 @@
 
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { PageTitle } from '@/components/page-title';
 import { PageNavigation } from '@/components/page-navigation';
-import { Button } from '@/components/ui/button';
-import { Camera, CameraOff } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { BirthdayCelebration } from '@/components/birthday-celebration';
-import { useToast } from '@/hooks/use-toast';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-
-const adjectives = ["Stunning", "Kind", "Funny", "My Safe Place", "My Always", "My Everything"];
-
-const AnimatedText = ({ words }: { words: string[] }) => {
-  const [index, setIndex] = useState(0);
-  const [translateY, setTranslateY] = useState('-220px');
-
-  useEffect(() => {
-    const onResize = () => {
-      setTranslateY(window.innerWidth < 768 ? '-160px' : '-220px');
-    };
-
-    onResize();
-    window.addEventListener('resize', onResize);
-
-    return () => window.removeEventListener('resize', onResize);
-  }, []);
-
-
-  useEffect(() => {
-    if (index >= words.length) return;
-    const timeout = setTimeout(() => {
-      setIndex(index + 1);
-    }, 1500);
-    return () => clearTimeout(timeout);
-  }, [index, words.length]);
-
-  return (
-    <div className="absolute inset-0 flex items-center justify-center">
-      {words.slice(0, index).map((word, i) => (
-        <p
-          key={i}
-          className="absolute font-headline text-2xl md:text-3xl text-primary text-glow animate-fade-in-up"
-          style={{
-            transform: `rotate(${i * (360 / words.length)}deg) translateY(${translateY}) rotate(-${i * (360 / words.length)}deg)`,
-            animationDelay: `${i * 0.2}s`
-          }}
-        >
-          {word}
-        </p>
-      ))}
-    </div>
-  );
-};
+import { Card, CardContent } from '@/components/ui/card';
+import { Heart } from 'lucide-react';
 
 export default function MirrorPage() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [useWebcam, setUseWebcam] = useState(false);
-  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
-  const { toast } = useToast();
-
-  useEffect(() => {
-    if (!useWebcam) {
-      if (videoRef.current?.srcObject) {
-        const stream = videoRef.current.srcObject as MediaStream;
-        stream.getTracks().forEach(track => track.stop());
-        videoRef.current.srcObject = null;
-      }
-      return;
-    }
-
-    const startWebcam = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-        }
-        setHasPermission(true);
-      } catch (err) {
-        console.error("Error accessing webcam:", err);
-        setHasPermission(false);
-        toast({
-          variant: 'destructive',
-          title: 'Camera Access Denied',
-          description: 'Please enable camera permissions in your browser settings to use this app.',
-        });
-      }
-    };
-    
-    startWebcam();
-  }, [useWebcam, toast]);
-
   return (
     <main className="min-h-screen w-full flex flex-col items-center justify-center py-24 pb-32">
       <PageTitle>How I See You</PageTitle>
@@ -101,50 +17,8 @@ export default function MirrorPage() {
       <div className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] flex items-center justify-center">
         <div className="absolute inset-0 rounded-full border-4 border-primary glow" />
         <div className="w-[calc(100%-40px)] h-[calc(100%-40px)] bg-background rounded-full overflow-hidden flex items-center justify-center relative">
-          
-          <video
-            ref={videoRef}
-            autoPlay
-            playsInline
-            muted
-            className={cn(
-              "absolute inset-0 w-full h-full object-cover scale-x-[-1] rounded-full transition-opacity duration-500",
-              useWebcam && hasPermission === true ? "opacity-100" : "opacity-0"
-            )}
-          />
-
-          <div className="z-10 flex flex-col items-center justify-center text-center">
-            { !useWebcam && (
-              <div className="flex flex-col items-center justify-center gap-4">
-                <p className="text-center text-lg">Would you like to see what I see?</p>
-                <Button onClick={() => setUseWebcam(true)} className="accent-glow">
-                  <Camera className="mr-2 h-4 w-4" /> Enable Camera
-                </Button>
-              </div>
-            )}
-
-            { useWebcam && hasPermission === null && (
-              <p>Requesting camera permission...</p>
-            )}
-
-            { hasPermission === false && (
-               <Alert variant="destructive" className="max-w-xs bg-transparent border-0">
-                  <CameraOff className="w-16 h-16 text-destructive mx-auto mb-4" />
-                  <AlertTitle className="text-center">Camera Access Denied</AlertTitle>
-                  <AlertDescription className="text-center">
-                    But I still see you perfectly.
-                  </AlertDescription>
-              </Alert>
-            )}
-          
-          { useWebcam && hasPermission === true && (
-            <>
-              <BirthdayCelebration />
-            </>
-           )}
-
+          <Heart className="w-24 h-24 text-primary animate-pulse" />
         </div>
-        {(useWebcam || hasPermission === false) && <AnimatedText words={adjectives} />}
       </div>
       
       <PageNavigation backLink="/love-letters" nextLink="/soundtrack" />

@@ -41,7 +41,7 @@ export default function MirrorPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [visibleWordsCount, setVisibleWordsCount] = useState(0);
   const { toast } = useToast();
   const celebrationShownRef = useRef(false);
 
@@ -74,13 +74,19 @@ export default function MirrorPage() {
   }, [toast]);
   
   useEffect(() => {
-    if(hasCameraPermission) {
+    if(hasCameraPermission && visibleWordsCount < animatedWords.length) {
       const interval = setInterval(() => {
-        setCurrentWordIndex((prevIndex) => (prevIndex + 1) % animatedWords.length);
-      }, 4000); // Change text every 4 seconds
+        setVisibleWordsCount((prevCount) => {
+          const newCount = prevCount + 1;
+          if (newCount >= animatedWords.length) {
+            clearInterval(interval);
+          }
+          return newCount;
+        });
+      }, 2000); // Reveal a new word every 2 seconds
       return () => clearInterval(interval);
     }
-  }, [hasCameraPermission]);
+  }, [hasCameraPermission, visibleWordsCount]);
 
 
   return (
@@ -96,7 +102,7 @@ export default function MirrorPage() {
                 key={word.text} 
                 text={word.text} 
                 position={word.position} 
-                isVisible={index === currentWordIndex} 
+                isVisible={index < visibleWordsCount} 
             />
         ))}
         <div className="absolute inset-0 rounded-full border-4 border-primary glow z-10" />

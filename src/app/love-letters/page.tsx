@@ -115,6 +115,7 @@ export default function StoryOfOursPage() {
   const [passwordInput, setPasswordInput] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isSecretLetterOpen, setIsSecretLetterOpen] = useState(false);
+  const [isSecretLetterUnlocked, setIsSecretLetterUnlocked] = useState(false);
   const [secretLetterPhase, setSecretLetterPhase] = useState(0);
 
   const { toast } = useToast();
@@ -172,6 +173,7 @@ export default function StoryOfOursPage() {
       setIsPasswordDialogOpen(false);
       setPasswordError("");
       setPasswordInput("");
+      setIsSecretLetterUnlocked(true);
       setSecretLetterPhase(0);
       setIsSecretLetterOpen(true);
     } else {
@@ -186,6 +188,7 @@ export default function StoryOfOursPage() {
   };
 
   const allChaptersCompleted = completedChapters.length === storyChapters.length;
+  const secretLetterCompleted = completedChapters.includes(storyChapters.length + 1);
 
   return (
     <div className="min-h-screen w-full" style={{
@@ -229,7 +232,7 @@ export default function StoryOfOursPage() {
           {allChaptersCompleted && (
              <Card
                 onClick={() => {
-                  if (isSecretLetterOpen) {
+                  if (isSecretLetterUnlocked) {
                     setSecretLetterPhase(0);
                     setIsSecretLetterOpen(true);
                   } else {
@@ -240,7 +243,7 @@ export default function StoryOfOursPage() {
               >
                 <CardContent className="p-6 flex items-center justify-between">
                   <h2 className="text-2xl font-headline text-accent/90">A Secret Letter</h2>
-                   {completedChapters.includes(storyChapters.length + 1) ? (
+                   {secretLetterCompleted ? (
                      <CheckCircle className="w-8 h-8 text-accent" />
                    ) : (
                     <KeyRound className="w-8 h-8 text-accent/80" />
@@ -342,7 +345,12 @@ export default function StoryOfOursPage() {
                   <Button onClick={handleNextSecretLetterPhase} variant="secondary">Continue...</Button>
                 ) : (
                   <DialogClose asChild>
-                    <Button onClick={() => setCompletedChapters([...completedChapters, storyChapters.length + 1])}>
+                    <Button onClick={() => {
+                      if (!secretLetterCompleted) {
+                        setCompletedChapters([...completedChapters, storyChapters.length + 1])
+                      }
+                      setIsSecretLetterOpen(false);
+                    }}>
                         I love you
                     </Button>
                   </DialogClose>
@@ -352,7 +360,7 @@ export default function StoryOfOursPage() {
       </Dialog>
 
 
-      <PageNavigation backLink="/constellation" nextLink={allChaptersCompleted ? "/mirror" : undefined} />
+      <PageNavigation backLink="/constellation" nextLink={secretLetterCompleted ? "/mirror" : undefined} />
     </div>
   );
 }

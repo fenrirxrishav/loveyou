@@ -12,14 +12,14 @@ import { HeartStream } from '@/components/heart-stream';
 import { cn } from '@/lib/utils';
 
 const animatedWords = [
-    { text: "I care about you more than words can say.", className: "top-[5%] left-1/2 -translate-x-1/2 animate-float-1" },
-    { text: "You make every moment brighter.", className: "top-1/4 right-[5%] animate-float-2" },
-    { text: "My world is better with you in it.", className: "top-1/2 right-0 animate-float-3" },
-    { text: "I'm so lucky to have you.", className: "bottom-1/4 right-[5%] animate-float-4" },
-    { text: "You are my favorite person.", className: "bottom-[5%] left-1/2 -translate-x-1/2 animate-float-5" },
-    { text: "Thinking of you always makes me smile.", className: "bottom-1/4 left-[5%] animate-float-6" },
-    { text: "You are simply perfect to me.", className: "top-1/2 left-0 animate-float-2" },
-    { text: "You're my everything.", className: "top-1/4 left-[5%] animate-float-3" },
+    { text: "Every time I think of you, my heart feels full.", className: "top-[5%] left-1/2 -translate-x-1/2 animate-float-1" },
+    { text: "You’re not just part of my life—you’re the best part.", className: "top-1/4 right-[5%] animate-float-2" },
+    { text: "Loving you is my favorite thing I’ve ever done.", className: "top-1/2 right-0 animate-float-3" },
+    { text: "No matter where life takes me, my heart will always find you.", className: "bottom-1/4 right-[5%] animate-float-4" },
+    { text: "Your smile is my daily dose of happiness.", className: "bottom-[5%] left-1/2 -translate-x-1/2 animate-float-5" },
+    { text: "I didn’t know what completeness felt like until you.", className: "bottom-1/4 left-[5%] animate-float-6" },
+    { text: "You’re the reason ordinary days feel extraordinary.", className: "top-1/2 left-0 animate-float-2" },
+    { text: "I am so lucky to have you.", className: "top-1/4 left-[5%] animate-float-3" },
 ];
 
 const AnimatedWord = ({ text, className }: { text: string; className: string }) => (

@@ -12,18 +12,27 @@ import { HeartStream } from '@/components/heart-stream';
 import { cn } from '@/lib/utils';
 
 const animatedWords = [
-    { text: "Every time I think of you, my heart feels full.", className: "top-[5%] left-1/2 -translate-x-1/2 animate-float-1" },
-    { text: "You’re not just part of my life—you’re the best part.", className: "top-1/4 right-[5%] animate-float-2" },
-    { text: "Loving you is my favorite thing I’ve ever done.", className: "top-1/2 right-0 animate-float-3" },
-    { text: "No matter where life takes me, my heart will always find you.", className: "bottom-1/4 right-[5%] animate-float-4" },
-    { text: "Your smile is my daily dose of happiness.", className: "bottom-[5%] left-1/2 -translate-x-1/2 animate-float-5" },
-    { text: "I didn’t know what completeness felt like until you.", className: "bottom-1/4 left-[5%] animate-float-6" },
-    { text: "You’re the reason ordinary days feel extraordinary.", className: "top-1/2 left-0 animate-float-2" },
-    { text: "I am so lucky to have you.", className: "top-1/4 left-[5%] animate-float-3" },
+    { text: "Every time I think of you, my heart feels full.", position: { top: '5%', left: '50%' } },
+    { text: "You’re not just part of my life—you’re the best part.", position: { top: '25%', left: '95%' } },
+    { text: "Loving you is my favorite thing I’ve ever done.", position: { top: '50%', left: '100%' } },
+    { text: "You’re the reason ordinary days feel extraordinary.", position: { top: '75%', left: '95%' } },
+    { text: "No matter where life takes me, my heart will always find you.", position: { top: '95%', left: '50%' } },
+    { text: "I didn’t know what completeness felt like until you.", position: { top: '75%', left: '5%' } },
+    { text: "Your smile is my daily dose of happiness.", position: { top: '50%', left: '0%' } },
+    { text: "I am so lucky to have you.", position: { top: '25%', left: '5%' } },
 ];
 
-const AnimatedWord = ({ text, className }: { text: string; className: string }) => (
-    <div className={cn("absolute text-primary text-glow text-lg font-headline text-center w-48 z-20", className)}>
+const AnimatedWord = ({ text, position, isVisible }: { text: string; position: { top: string; left: string }, isVisible: boolean }) => (
+    <div className={cn(
+        "absolute text-primary text-glow text-lg font-headline text-center w-48 z-20 transition-all duration-1000",
+        isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+        )}
+        style={{
+            top: position.top,
+            left: position.left,
+            transform: 'translate(-50%, -50%)'
+        }}
+    >
         {text}
     </div>
 );
@@ -32,6 +41,7 @@ export default function MirrorPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const { toast } = useToast();
   const celebrationShownRef = useRef(false);
 
@@ -62,6 +72,16 @@ export default function MirrorPage() {
 
     getCameraPermission();
   }, [toast]);
+  
+  useEffect(() => {
+    if(hasCameraPermission) {
+      const interval = setInterval(() => {
+        setCurrentWordIndex((prevIndex) => (prevIndex + 1) % animatedWords.length);
+      }, 4000); // Change text every 4 seconds
+      return () => clearInterval(interval);
+    }
+  }, [hasCameraPermission]);
+
 
   return (
     <main className="min-h-screen w-full flex flex-col items-center justify-center py-24 pb-32 overflow-hidden">
@@ -71,8 +91,13 @@ export default function MirrorPage() {
       </p>
 
       <div className="relative w-[350px] h-[350px] md:w-[450px] md:h-[450px] flex items-center justify-center">
-        {hasCameraPermission && animatedWords.map(word => (
-            <AnimatedWord key={word.text} text={word.text} className={word.className} />
+        {hasCameraPermission && animatedWords.map((word, index) => (
+            <AnimatedWord 
+                key={word.text} 
+                text={word.text} 
+                position={word.position} 
+                isVisible={index === currentWordIndex} 
+            />
         ))}
         <div className="absolute inset-0 rounded-full border-4 border-primary glow z-10" />
         <Card className="w-[calc(100%-20px)] h-[calc(100%-20px)] bg-background rounded-full overflow-hidden flex items-center justify-center relative shadow-inner z-0">

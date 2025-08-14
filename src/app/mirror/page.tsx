@@ -23,7 +23,7 @@ const animatedWords = [
 ];
 
 const AnimatedWord = ({ text, className }: { text: string; className: string }) => (
-    <div className={cn("absolute text-primary text-glow text-lg font-headline text-center w-48", className)}>
+    <div className={cn("absolute text-primary text-glow text-lg font-headline text-center w-48 z-20", className)}>
         {text}
     </div>
 );
@@ -74,8 +74,8 @@ export default function MirrorPage() {
         {hasCameraPermission && animatedWords.map(word => (
             <AnimatedWord key={word.text} text={word.text} className={word.className} />
         ))}
-        <div className="absolute inset-0 rounded-full border-4 border-primary glow" />
-        <Card className="w-[calc(100%-20px)] h-[calc(100%-20px)] bg-background rounded-full overflow-hidden flex items-center justify-center relative shadow-inner">
+        <div className="absolute inset-0 rounded-full border-4 border-primary glow z-10" />
+        <Card className="w-[calc(100%-20px)] h-[calc(100%-20px)] bg-background rounded-full overflow-hidden flex items-center justify-center relative shadow-inner z-0">
           <CardContent className="p-0 w-full h-full flex items-center justify-center">
             {hasCameraPermission && (
               <>

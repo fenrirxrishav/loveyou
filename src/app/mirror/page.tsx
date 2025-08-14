@@ -9,6 +9,20 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { BirthdayCelebration } from '@/components/birthday-celebration';
 import { Camera } from 'lucide-react';
 import { HeartStream } from '@/components/heart-stream';
+import { cn } from '@/lib/utils';
+
+const animatedWords = [
+    { text: "My Love", className: "top-[10%] left-[5%] animate-float-1" },
+    { text: "Stunning", className: "top-[20%] right-[5%] animate-float-2" },
+    { text: "Radiant", className: "bottom-[25%] left-[8%] animate-float-3" },
+    { text: "Perfect", className: "bottom-[15%] right-[10%] animate-float-4" },
+];
+
+const AnimatedWord = ({ text, className }: { text: string; className: string }) => (
+    <div className={cn("absolute text-primary text-glow text-xl font-headline", className)}>
+        {text}
+    </div>
+);
 
 export default function MirrorPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -27,11 +41,6 @@ export default function MirrorPage() {
           videoRef.current.srcObject = stream;
         }
 
-        // Hide celebration after a few seconds
-        setTimeout(() => {
-          setShowCelebration(false);
-        }, 8000); // Increased duration to enjoy the effects
-
       } catch (error) {
         console.error('Error accessing camera:', error);
         setHasCameraPermission(false);
@@ -47,13 +56,16 @@ export default function MirrorPage() {
   }, [toast]);
 
   return (
-    <main className="min-h-screen w-full flex flex-col items-center justify-center py-24 pb-32">
+    <main className="min-h-screen w-full flex flex-col items-center justify-center py-24 pb-32 overflow-hidden">
       <PageTitle>How I See You</PageTitle>
-      <p className="text-center font-body text-lg text-foreground/80 mb-12 animate-fade-in-up max-w-xl">
+      <p className="text-center font-body text-lg text-foreground/80 mb-12 animate-fade-in-up max-w-xl z-10">
         Look into the mirror and see the reflection of my heart. But also, it's your birthday! See yourself as I see you: a cause for celebration.
       </p>
 
       <div className="relative w-[300px] h-[400px] md:w-[400px] md:h-[533px] flex items-center justify-center">
+        {showCelebration && animatedWords.map(word => (
+            <AnimatedWord key={word.text} text={word.text} className={word.className} />
+        ))}
         <div className="absolute inset-0 rounded-2xl border-4 border-primary glow" />
         <Card className="w-[calc(100%-20px)] h-[calc(100%-20px)] bg-background rounded-2xl overflow-hidden flex items-center justify-center relative shadow-inner">
           <CardContent className="p-0 w-full h-full flex items-center justify-center">

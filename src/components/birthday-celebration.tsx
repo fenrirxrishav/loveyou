@@ -1,3 +1,4 @@
+
 'use client';
 import { useEffect, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
@@ -24,9 +25,9 @@ export const BirthdayCelebration = () => {
                 id: i,
                 style: {
                     left: `${Math.random() * 100}%`,
-                    top: `${Math.random() * 20 - 10}%`, // Start slightly above the container
-                    animationDelay: `${Math.random() * 0.5}s`,
-                    animationDuration: `${Math.random() * 2 + 1}s`,
+                    top: `${-10}%`,
+                    animationDelay: `${Math.random() * 3}s`,
+                    animationDuration: `${Math.random() * 2 + 3}s`,
                     transform: `rotate(${Math.random() * 360}deg)`,
                 },
                 colorClass: colors[Math.floor(Math.random() * colors.length)],

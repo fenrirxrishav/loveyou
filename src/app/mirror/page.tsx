@@ -8,6 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { BirthdayCelebration } from '@/components/birthday-celebration';
 import { Camera } from 'lucide-react';
+import { HeartStream } from '@/components/heart-stream';
 
 export default function MirrorPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -29,7 +30,7 @@ export default function MirrorPage() {
         // Hide celebration after a few seconds
         setTimeout(() => {
           setShowCelebration(false);
-        }, 5000);
+        }, 8000); // Increased duration to enjoy the effects
 
       } catch (error) {
         console.error('Error accessing camera:', error);
@@ -56,7 +57,12 @@ export default function MirrorPage() {
         <div className="absolute inset-0 rounded-2xl border-4 border-primary glow" />
         <Card className="w-[calc(100%-20px)] h-[calc(100%-20px)] bg-background rounded-2xl overflow-hidden flex items-center justify-center relative shadow-inner">
           <CardContent className="p-0 w-full h-full flex items-center justify-center">
-            {showCelebration && <BirthdayCelebration />}
+            {showCelebration && (
+              <>
+                <BirthdayCelebration />
+                <HeartStream />
+              </>
+            )}
             <video
               ref={videoRef}
               className="w-full h-full object-cover"
@@ -84,5 +90,3 @@ export default function MirrorPage() {
     </main>
   );
 }
-
-    

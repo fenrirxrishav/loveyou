@@ -12,14 +12,18 @@ import { HeartStream } from '@/components/heart-stream';
 import { cn } from '@/lib/utils';
 
 const animatedWords = [
-    { text: "My Love", className: "top-[10%] left-[5%] animate-float-1" },
-    { text: "Stunning", className: "top-[20%] right-[5%] animate-float-2" },
-    { text: "Radiant", className: "bottom-[25%] left-[8%] animate-float-3" },
-    { text: "Perfect", className: "bottom-[15%] right-[10%] animate-float-4" },
+    { text: "I care about you more than words can say.", className: "top-[5%] left-1/2 -translate-x-1/2 animate-float-1" },
+    { text: "You make every moment brighter.", className: "top-1/4 right-[5%] animate-float-2" },
+    { text: "My world is better with you in it.", className: "top-1/2 right-0 animate-float-3" },
+    { text: "I'm so lucky to have you.", className: "bottom-1/4 right-[5%] animate-float-4" },
+    { text: "You are my favorite person.", className: "bottom-[5%] left-1/2 -translate-x-1/2 animate-float-5" },
+    { text: "Thinking of you always makes me smile.", className: "bottom-1/4 left-[5%] animate-float-6" },
+    { text: "You are simply perfect to me.", className: "top-1/2 left-0 animate-float-2" },
+    { text: "You're my everything.", className: "top-1/4 left-[5%] animate-float-3" },
 ];
 
 const AnimatedWord = ({ text, className }: { text: string; className: string }) => (
-    <div className={cn("absolute text-primary text-glow text-xl font-headline", className)}>
+    <div className={cn("absolute text-primary text-glow text-lg font-headline text-center w-48", className)}>
         {text}
     </div>
 );
@@ -29,13 +33,17 @@ export default function MirrorPage() {
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const { toast } = useToast();
+  const celebrationShownRef = useRef(false);
 
   useEffect(() => {
     const getCameraPermission = async () => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
         setHasCameraPermission(true);
-        setShowCelebration(true); // Trigger celebration on permission grant
+        if (!celebrationShownRef.current) {
+          setShowCelebration(true);
+          celebrationShownRef.current = true;
+        }
 
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
@@ -62,16 +70,16 @@ export default function MirrorPage() {
         Look into the mirror and see the reflection of my heart. But also, it's your birthday! See yourself as I see you: a cause for celebration.
       </p>
 
-      <div className="relative w-[300px] h-[400px] md:w-[400px] md:h-[533px] flex items-center justify-center">
-        {showCelebration && animatedWords.map(word => (
+      <div className="relative w-[350px] h-[350px] md:w-[450px] md:h-[450px] flex items-center justify-center">
+        {hasCameraPermission && animatedWords.map(word => (
             <AnimatedWord key={word.text} text={word.text} className={word.className} />
         ))}
-        <div className="absolute inset-0 rounded-2xl border-4 border-primary glow" />
-        <Card className="w-[calc(100%-20px)] h-[calc(100%-20px)] bg-background rounded-2xl overflow-hidden flex items-center justify-center relative shadow-inner">
+        <div className="absolute inset-0 rounded-full border-4 border-primary glow" />
+        <Card className="w-[calc(100%-20px)] h-[calc(100%-20px)] bg-background rounded-full overflow-hidden flex items-center justify-center relative shadow-inner">
           <CardContent className="p-0 w-full h-full flex items-center justify-center">
-            {showCelebration && (
+            {hasCameraPermission && (
               <>
-                <BirthdayCelebration />
+                {showCelebration && <BirthdayCelebration />}
                 <HeartStream />
               </>
             )}

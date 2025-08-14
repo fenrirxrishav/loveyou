@@ -12,9 +12,14 @@ const ConfettiPiece = ({ style, colorClass }: { style: React.CSSProperties, colo
 
 export const BirthdayCelebration = () => {
     const [isClient, setIsClient] = useState(false);
+    const [show, setShow] = useState(true);
 
     useEffect(() => {
         setIsClient(true);
+        const timer = setTimeout(() => {
+            setShow(false);
+        }, 4500); // Animation duration + a little extra
+        return () => clearTimeout(timer);
     }, []);
 
     const confetti = useMemo(() => {
@@ -26,8 +31,8 @@ export const BirthdayCelebration = () => {
                 style: {
                     left: `${Math.random() * 100}%`,
                     top: `${-10}%`,
-                    animationDelay: `${Math.random() * 3}s`,
-                    animationDuration: `${Math.random() * 2 + 3}s`,
+                    animationDelay: `${Math.random() * 1.5}s`,
+                    animationDuration: `${Math.random() * 2 + 2.5}s`,
                     transform: `rotate(${Math.random() * 360}deg)`,
                 },
                 colorClass: colors[Math.floor(Math.random() * colors.length)],
@@ -35,7 +40,7 @@ export const BirthdayCelebration = () => {
         });
     }, [isClient]);
 
-    if (!isClient) return null;
+    if (!isClient || !show) return null;
 
     return (
         <div className="absolute inset-0 z-20 pointer-events-none flex items-center justify-center overflow-hidden">

@@ -94,6 +94,17 @@ const storyChapters: StoryChapter[] = [
   },
 ];
 
+const secretLetterPhases: StoryPhase[] = [
+    { content: "Hey! sweetheart" },
+    { content: "I know this might feel like a lot, but I wanted to say something. This letter was actually written a day before your birthday, and everything you’ve seen was something I had been building for months." },
+    { content: "Lately, we haven’t been talking much. I don’t have a huge problem with that, but I really want to talk—especially to you. It feels like I’m losing you a little more every time we don’t talk, and when you ignore it, it honestly hurts." },
+    { content: "This is a secret letter because I want to express my deepest feelings here. You know, all my friends keep telling me to move on, to hang out with someone else—it’s been three years, they say. I always tell them, “I’m already with someone,” and they know about you. They give me reality checks, sometimes taunt me, and I still stand by my choice." },
+    { content: "But then something unexpected happened in my life, and it made me realize that I really do want someone—truly. And when I thought about it, I noticed how much our conversations have changed. They’ve become just… normal. Like I’m talking to some girl who knows me a little, but not deeply. Casual talk. I don’t want things to stay like that forever." },
+    { content: "I don’t know where we’re going with this, and that’s why I want to know—how much are you invested in this? Because if I’m putting my time, emotions, and energy into something that just stretches on without clarity, then when it ends (if it does), it will hurt much more. That’s why I told you to make a decision, and why I said everything depends on you—because it really does." },
+    { content: "In reality, you don’t show much—no love, no possessiveness, nothing beyond casual interactions. The question is: do I want you to be like that? I don’t know about the possessiveness part, but I at least want you to show some love—if you love me. And things like when you say, “Apko kyu batau” or “Nahi batana”—I take them lightly, but they still affect me, because I care." },
+    { content: "Like I said, your decision matters here. So for real—decide one thing and behave accordingly. I don’t want your answer right now, because I already know you don’t have one yet. Whatever I decide will depend on your behavior, so just act as you would naturally, and I’ll make up my mind from that. I think that will make things easier for both of us." },
+];
+
 const secretLetterPassword = "senior";
 
 export default function StoryOfOursPage() {
@@ -104,8 +115,11 @@ export default function StoryOfOursPage() {
   const [passwordInput, setPasswordInput] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [isSecretLetterOpen, setIsSecretLetterOpen] = useState(false);
+  const [secretLetterPhase, setSecretLetterPhase] = useState(0);
+
   const { toast } = useToast();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const secretLetterScrollAreaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (scrollAreaRef.current) {
@@ -115,6 +129,15 @@ export default function StoryOfOursPage() {
       });
     }
   }, [currentPhase]);
+  
+  useEffect(() => {
+    if (secretLetterScrollAreaRef.current) {
+      secretLetterScrollAreaRef.current.scrollTo({
+        top: secretLetterScrollAreaRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  }, [secretLetterPhase]);
 
   const handleChapterClick = (chapter: StoryChapter) => {
     const isUnlocked = chapter.id === 1 || completedChapters.includes(chapter.id - 1);
@@ -149,10 +172,17 @@ export default function StoryOfOursPage() {
       setIsPasswordDialogOpen(false);
       setPasswordError("");
       setPasswordInput("");
+      setSecretLetterPhase(0);
       setIsSecretLetterOpen(true);
     } else {
       setPasswordError("That's not it, try again sweetheart.");
     }
+  };
+
+  const handleNextSecretLetterPhase = () => {
+      if (secretLetterPhase < secretLetterPhases.length - 1) {
+          setSecretLetterPhase(secretLetterPhase + 1);
+      }
   };
 
   const allChaptersCompleted = completedChapters.length === storyChapters.length;
@@ -200,7 +230,7 @@ export default function StoryOfOursPage() {
              <Card
                 onClick={() => {
                   if (isSecretLetterOpen) {
-                    // Re-open secret letter if already unlocked
+                    setSecretLetterPhase(0);
                     setIsSecretLetterOpen(true);
                   } else {
                     setIsPasswordDialogOpen(true);
@@ -210,7 +240,7 @@ export default function StoryOfOursPage() {
               >
                 <CardContent className="p-6 flex items-center justify-between">
                   <h2 className="text-2xl font-headline text-accent/90">A Secret Letter</h2>
-                   {isSecretLetterOpen ? (
+                   {completedChapters.includes(storyChapters.length + 1) ? (
                      <CheckCircle className="w-8 h-8 text-accent" />
                    ) : (
                     <KeyRound className="w-8 h-8 text-accent/80" />
@@ -292,22 +322,31 @@ export default function StoryOfOursPage() {
             <DialogHeader>
               <DialogTitle className="font-headline text-3xl text-primary text-glow">My Dearest,</DialogTitle>
             </DialogHeader>
-            <ScrollArea className="h-64 my-4 pr-4">
-              <div className="space-y-6 font-body text-lg text-foreground/90 leading-relaxed select-none">
-                 <p>Hey! sweetheart</p>
-                 <p>I know this might feel like a lot, but I wanted to say something. This letter was actually written a day before your birthday, and everything you’veseen was something I had been building for months.</p>
-                 <p>Lately, we haven’t been talking much. I don’t have a huge problem with that, but I really want to talk—especially to you. It feels like I’m losing you a little more every time we don’t talk, and when you ignore it, it honestly hurts.</p>
-                 <p>This is a secret letter because I want to express my deepest feelings here. You know, all my friends keep telling me to move on, to hang out with someone else—it’s been three years, they say. I always tell them, “I’m already with someone,” and they know about you. They give me reality checks, sometimes taunt me, and I still stand by my choice.</p>
-                 <p>But then something unexpected happened in my life, and it made me realize that I really do want someone—truly. And when I thought about it, I noticed how much our conversations have changed. They’ve become just… normal. Like I’m talking to some girl who knows me a little, but not deeply. Casual talk. I don’t want things to stay like that forever.</p>
-                 <p>I don’t know where we’re going with this, and that’s why I want to know—how much are you invested in this? Because if I’m putting my time, emotions, and energy into something that just stretches on without clarity, then when it ends (if it does), it will hurt much more. That’s why I told you to make a decision, and why I said everything depends on you—because it really does.</p>
-                 <p>In reality, you don’t show much—no love, no possessiveness, nothing beyond casual interactions. The question is: do I want you to be like that? I don’t know about the possessiveness part, but I at least want you to show some love—if you love me. And things like when you say, “Apko kyu batau” or “Nahi batana”—I take them lightly, but they still affect me, because I care.</p>
-                 <p>Like I said, your decision matters here. So for real—decide one thing and behave accordingly. I don’t want your answer right now, because I already know you don’t have one yet. Whatever I decide will depend on your behavior, so just act as you would naturally, and I’ll make up my mind from that. I think that will make things easier for both of us.</p>
+            <ScrollArea className="h-64 my-4 pr-4" viewportRef={secretLetterScrollAreaRef}>
+              <div className="space-y-6 font-body text-lg text-foreground/90 leading-relaxed">
+                 {secretLetterPhases.slice(0, secretLetterPhase + 1).map((phase, index) => (
+                    <p
+                      key={index}
+                      className={cn(
+                        "animate-fade-in-up",
+                        index === secretLetterPhase && "font-semibold text-foreground"
+                      )}
+                    >
+                      {phase.content}
+                    </p>
+                 ))}
               </div>
             </ScrollArea>
             <DialogFooter>
-               <DialogClose asChild>
-                  <Button>I love you</Button>
-               </DialogClose>
+                {secretLetterPhase < secretLetterPhases.length - 1 ? (
+                  <Button onClick={handleNextSecretLetterPhase} variant="secondary">Continue...</Button>
+                ) : (
+                  <DialogClose asChild>
+                    <Button onClick={() => setCompletedChapters([...completedChapters, storyChapters.length + 1])}>
+                        I love you
+                    </Button>
+                  </DialogClose>
+                )}
             </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -317,3 +356,5 @@ export default function StoryOfOursPage() {
     </div>
   );
 }
+
+    

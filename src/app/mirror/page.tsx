@@ -54,38 +54,6 @@ const AnimatedText = ({ words }: { words: string[] }) => {
   );
 };
 
-const BlowingKissAnimation = () => {
-  const [kisses, setKisses] = useState<any[]>([]);
-  useEffect(() => {
-    setKisses(
-        Array.from({ length: 15 }).map((_, i) => ({
-            id: i,
-            animationDuration: `${Math.random() * 2 + 2}s`,
-            animationDelay: `${i * 0.2 + Math.random() * 0.5}s`,
-            size: `${Math.random() * 16 + 12}px`,
-        }))
-    );
-  }, []);
-
-  return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      {kisses.map(kiss => (
-        <Heart
-          key={kiss.id}
-          className="absolute bottom-0 left-1/4 text-primary fill-primary/50 animate-kiss-blow origin-bottom-left"
-          style={{
-            animationDuration: kiss.animationDuration,
-            animationDelay: kiss.animationDelay,
-            width: kiss.size,
-            height: kiss.size,
-          }}
-        />
-      ))}
-    </div>
-  );
-};
-
-
 export default function MirrorPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [useWebcam, setUseWebcam] = useState(false);
@@ -171,7 +139,6 @@ export default function MirrorPage() {
           
           { useWebcam && hasPermission === true && (
             <>
-              <BlowingKissAnimation />
               <BirthdayCelebration />
             </>
            )}

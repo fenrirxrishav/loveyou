@@ -1,4 +1,3 @@
-
 'use client';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { PageTitle } from '@/components/page-title';
@@ -55,12 +54,15 @@ const AnimatedText = ({ words }: { words: string[] }) => {
 };
 
 const BlowingKissAnimation = () => {
-  const kisses = useMemo(() => Array.from({ length: 15 }).map((_, i) => ({
-    id: i,
-    animationDuration: `${Math.random() * 2 + 2}s`,
-    animationDelay: `${i * 0.2 + Math.random() * 0.5}s`,
-    size: `${Math.random() * 16 + 12}px`,
-  })), []);
+  const [kisses, setKisses] = useState<any[]>([]);
+  useEffect(() => {
+    setKisses(Array.from({ length: 15 }).map((_, i) => ({
+        id: i,
+        animationDuration: `${Math.random() * 2 + 2}s`,
+        animationDelay: `${i * 0.2 + Math.random() * 0.5}s`,
+        size: `${Math.random() * 16 + 12}px`,
+    })))
+  }, []);
 
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">

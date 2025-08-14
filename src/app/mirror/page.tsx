@@ -1,3 +1,4 @@
+
 'use client';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { PageTitle } from '@/components/page-title';
@@ -6,6 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Camera, CameraOff, Heart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { BirthdayCelebration } from '@/components/birthday-celebration';
+import { useToast } from '@/hooks/use-toast';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const adjectives = ["Stunning", "Kind", "Funny", "My Safe Place", "My Always", "My Everything"];
 
@@ -81,6 +84,7 @@ export default function MirrorPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [useWebcam, setUseWebcam] = useState(false);
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const { toast } = useToast();
 
   useEffect(() => {
     if (!useWebcam) {
@@ -102,11 +106,16 @@ export default function MirrorPage() {
       } catch (err) {
         console.error("Error accessing webcam:", err);
         setHasPermission(false);
+        toast({
+          variant: 'destructive',
+          title: 'Camera Access Denied',
+          description: 'Please enable camera permissions in your browser settings to use this app.',
+        });
       }
     };
     
     startWebcam();
-  }, [useWebcam]);
+  }, [useWebcam, toast]);
 
   return (
     <main className="min-h-screen w-full flex flex-col items-center justify-center py-24 pb-32">
@@ -145,13 +154,14 @@ export default function MirrorPage() {
             )}
 
             { hasPermission === false && (
-              <div className="flex flex-col items-center justify-center gap-4">
-                <CameraOff className="w-16 h-16 text-destructive" />
-                <p>Camera access denied.</p>
-                <p className="text-sm text-muted-foreground">But I still see you perfectly.</p>
-              </div>
+               <Alert variant="destructive" className="max-w-xs bg-transparent border-0">
+                  <CameraOff className="w-16 h-16 text-destructive mx-auto mb-4" />
+                  <AlertTitle className="text-center">Camera Access Denied</AlertTitle>
+                  <AlertDescription className="text-center">
+                    But I still see you perfectly.
+                  </AlertDescription>
+              </Alert>
             )}
-          </div>
           
           { useWebcam && hasPermission === true && (
             <>
@@ -164,7 +174,7 @@ export default function MirrorPage() {
         {(useWebcam || hasPermission === false) && <AnimatedText words={adjectives} />}
       </div>
       
-      <PageNavigation backLink="/love-letters" nextLink="/surprise" />
+      <PageNavigation backLink="/love-letters" nextLink="/constellation" />
     </main>
   );
 }

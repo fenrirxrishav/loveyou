@@ -156,7 +156,7 @@ export default function MirrorPage() {
         </Card>
       </div>
       
-      <PageNavigation backLink="/love-letters" nextLink="/" />
+      <PageNavigation backLink="/love-letters" nextLink="/finale" />
     </main>
   );
 }

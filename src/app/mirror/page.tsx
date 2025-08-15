@@ -12,28 +12,33 @@ import { HeartStream } from '@/components/heart-stream';
 import { cn } from '@/lib/utils';
 
 const animatedWords = [
-    { text: "Every time I think of you, my heart feels full.", position: { top: '5%', left: '50%' }, mobilePosition: { top: '2%', left: '50%'} },
-    { text: "You’re not just part of my life—you’re the best part.", position: { top: '25%', left: '95%' }, mobilePosition: { top: '15%', left: '85%'} },
-    { text: "Loving you is my favorite thing I’ve ever done.", position: { top: '50%', left: '100%' }, mobilePosition: { top: '35%', left: '98%'} },
-    { text: "You’re the reason ordinary days feel extraordinary.", position: { top: '75%', left: '95%' }, mobilePosition: { top: '55%', left: '85%'} },
-    { text: "No matter where life takes me, my heart will always find you.", position: { top: '95%', left: '50%' }, mobilePosition: { top: '75%', left: '50%'} },
-    { text: "I didn’t know what completeness felt like until you.", position: { top: '75%', left: '5%' }, mobilePosition: { top: '55%', left: '15%'} },
-    { text: "Your smile is my daily dose of happiness.", position: { top: '50%', left: '0%' }, mobilePosition: { top: '35%', left: '2%'} },
-    { text: "I am so lucky to have you.", position: { top: '25%', left: '5%' }, mobilePosition: { top: '15%', left: '15%'} },
+    { text: "Every time I think of you, my heart feels full.", position: { top: '5%', left: '50%' }, mobilePosition: { top: '5%', left: '50%'} },
+    { text: "You’re not just part of my life—you’re the best part.", position: { top: '25%', left: '95%' }, mobilePosition: { top: '20%', left: '85%'} },
+    { text: "Loving you is my favorite thing I’ve ever done.", position: { top: '50%', left: '100%' }, mobilePosition: { top: '40%', left: '95%'} },
+    { text: "You’re the reason ordinary days feel extraordinary.", position: { top: '75%', left: '95%' }, mobilePosition: { top: '60%', left: '85%'} },
+    { text: "No matter where life takes me, my heart will always find you.", position: { top: '95%', left: '50%' }, mobilePosition: { top: '80%', left: '50%'} },
+    { text: "I didn’t know what completeness felt like until you.", position: { top: '75%', left: '5%' }, mobilePosition: { top: '60%', left: '15%'} },
+    { text: "Your smile is my daily dose of happiness.", position: { top: '50%', left: '0%' }, mobilePosition: { top: '40%', left: '5%'} },
+    { text: "I am so lucky to have you.", position: { top: '25%', left: '5%' }, mobilePosition: { top: '20%', left: '15%'} },
 ];
 
-const AnimatedWord = ({ text, position, isVisible }: { text: string; position: { top: string; left: string }, isVisible: boolean }) => (
+const AnimatedWord = ({ text, position, isVisible, animationDelay }: { text: string; position: { top: string; left: string }, isVisible: boolean, animationDelay: string }) => (
     <div className={cn(
-        "absolute text-primary text-glow text-base md:text-lg font-headline text-center w-36 md:w-48 z-20 transition-all duration-1000",
-        isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+        "absolute text-primary text-glow text-sm md:text-base font-headline text-center w-36 md:w-48 z-20",
+        "transition-opacity duration-1000",
+        isVisible ? 'opacity-100' : 'opacity-0'
         )}
         style={{
             top: position.top,
             left: position.left,
-            transform: 'translate(-50%, -50%)'
+            transform: 'translate(-50%, -50%)',
         }}
     >
-        {text}
+        {isVisible && (
+             <p className="animate-typing overflow-hidden whitespace-nowrap border-r-2 border-r-primary pr-1">
+                {text}
+             </p>
+        )}
     </div>
 );
 
@@ -83,6 +88,7 @@ export default function MirrorPage() {
   
   useEffect(() => {
     if(hasCameraPermission) {
+      setVisibleWordsCount(0); // Reset for re-entry
       const interval = setInterval(() => {
         setVisibleWordsCount((prevCount) => {
           if (prevCount < animatedWords.length) {
@@ -91,7 +97,7 @@ export default function MirrorPage() {
           clearInterval(interval);
           return prevCount;
         });
-      }, 2000); // Reveal a new word every 2 seconds
+      }, 3000); // Reveal a new word every 3 seconds
       return () => clearInterval(interval);
     }
   }, [hasCameraPermission]);
@@ -105,12 +111,13 @@ export default function MirrorPage() {
       </p>
 
       <div className="relative w-[300px] h-[300px] sm:w-[350px] sm:h-[350px] md:w-[450px] md:h-[450px] flex items-center justify-center">
-        {hasCameraPermission && animatedWords.map((word, index) => (
+        {animatedWords.map((word, index) => (
             <AnimatedWord 
                 key={word.text} 
                 text={word.text} 
                 position={isMobile ? word.mobilePosition : word.position} 
                 isVisible={index < visibleWordsCount} 
+                animationDelay={`${index * 0.5}s`}
             />
         ))}
         <div className="absolute inset-0 rounded-full border-4 border-primary glow z-10" />

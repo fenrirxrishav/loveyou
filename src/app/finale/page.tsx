@@ -50,7 +50,7 @@ export default function FinalePage() {
           </p>
         </div>
       </div>
-      <PageNavigation backLink="/mirror" nextLink="/" />
+      <PageNavigation backLink="/mirror" />
     </main>
   );
 }

@@ -11,7 +11,7 @@ type PageNavigationProps = {
 export function PageNavigation({ backLink, nextLink }: PageNavigationProps) {
   return (
     <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/30 backdrop-blur-sm z-50">
-      <div className="container mx-auto flex justify-between items-center">
+      <div className={cn("container mx-auto flex items-center", nextLink ? "justify-between" : "justify-start")}>
         <div>
           {backLink && (
             <Link href={backLink} passHref>

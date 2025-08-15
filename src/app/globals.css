@@ -111,6 +111,10 @@ body {
   .text-glow {
     text-shadow: 0 0 8px hsl(var(--primary) / 0.75), 0 0 12px hsl(var(--primary) / 0.5);
   }
+  
+  .text-glow-finale {
+    text-shadow: 0 0 8px hsl(var(--primary) / 0.5), 0 0 12px hsl(var(--primary) / 0.3), 0 0 20px #FFB6C1;
+  }
 
   .animate-kiss-blow {
     animation: kiss-blow ease-in-out infinite;
@@ -190,17 +194,87 @@ body {
     display: inline-block;
     overflow: hidden;
     white-space: nowrap;
-    border-right: 2px solid hsl(var(--primary));
-    animation: typing 2s steps(var(--step-count), end) forwards;
+    width: 0;
+    animation: typing 2.5s steps(30, end) forwards;
+  }
+
+  .animate-typing .line-2 p {
+     animation-delay: 1s;
   }
   
   @keyframes typing {
     from { width: 0 }
-    to { width: 100%; border-right-color: transparent; }
+    to { width: 100%; }
   }
 
   @keyframes blink-caret {
     from, to { border-color: transparent }
     50% { border-color: hsl(var(--primary)); }
   }
+
+  .animate-heading-reveal {
+    animation: heading-reveal 2.5s ease-out forwards;
+  }
+
+  @keyframes heading-reveal {
+    0% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.02);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-body-reveal {
+    opacity: 0;
+    animation: body-reveal 2s ease-out forwards;
+  }
+
+  @keyframes body-reveal {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-final-wish-reveal {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+    opacity: 0;
+    animation: final-wish-typing 3s steps(60, end) forwards, final-wish-glow 2s ease-in-out infinite 3s;
+    animation-delay: inherit;
+  }
+
+  @keyframes final-wish-typing {
+    0% {
+      width: 0;
+      opacity: 1;
+    }
+    100% {
+      width: 100%;
+      opacity: 1;
+    }
+  }
+
+  @keyframes final-wish-glow {
+    0%, 100% {
+      text-shadow: 0 0 10px hsl(var(--primary) / 0.8), 0 0 15px #C9A0FF;
+    }
+    50% {
+      text-shadow: 0 0 20px hsl(var(--primary) / 1), 0 0 30px #C9A0FF;
+    }
+  }
+
 }

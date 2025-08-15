@@ -14,11 +14,11 @@ import { cn } from '@/lib/utils';
 const animatedWords = [
     { text: "Every time I think of you, my heart feels full.", position: { top: '5%', left: '50%' }, mobilePosition: { top: '5%', left: '50%'} },
     { text: "You’re not just part of my life—you’re the best part.", position: { top: '25%', left: '95%' }, mobilePosition: { top: '20%', left: '85%'} },
-    { text: "Loving you is my favorite thing I’ve ever done.", position: { top: '50%', left: '100%' }, mobilePosition: { top: '40%', left: '95%'} },
-    { text: "You’re the reason ordinary days feel extraordinary.", position: { top: '75%', left: '95%' }, mobilePosition: { top: '60%', left: '85%'} },
-    { text: "No matter where life takes me, my heart will always find you.", position: { top: '95%', left: '50%' }, mobilePosition: { top: '80%', left: '50%'} },
-    { text: "I didn’t know what completeness felt like until you.", position: { top: '75%', left: '5%' }, mobilePosition: { top: '60%', left: '15%'} },
-    { text: "Your smile is my daily dose of happiness.", position: { top: '50%', left: '0%' }, mobilePosition: { top: '40%', left: '5%'} },
+    { text: "Loving you is my favorite thing I’ve ever done.", position: { top: '50%', left: '100%' }, mobilePosition: { top: '35%', left: '95%'} },
+    { text: "You’re the reason ordinary days feel extraordinary.", position: { top: '75%', left: '95%' }, mobilePosition: { top: '55%', left: '90%'} },
+    { text: "No matter where life takes me, my heart will always find you.", position: { top: '95%', left: '50%' }, mobilePosition: { top: '75%', left: '50%'} },
+    { text: "I didn’t know what completeness felt like until you.", position: { top: '75%', left: '5%' }, mobilePosition: { top: '55%', left: '10%'} },
+    { text: "Your smile is my daily dose of happiness.", position: { top: '50%', left: '0%' }, mobilePosition: { top: '35%', left: '5%'} },
     { text: "I am so lucky to have you.", position: { top: '25%', left: '5%' }, mobilePosition: { top: '20%', left: '15%'} },
 ];
 

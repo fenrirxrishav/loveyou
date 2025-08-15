@@ -187,7 +187,6 @@ export default function StoryOfOursPage() {
       }
   };
 
-  const allChaptersCompleted = completedChapters.length === storyChapters.length;
   const secretLetterCompleted = completedChapters.includes(storyChapters.length + 1);
 
   return (
@@ -229,28 +228,26 @@ export default function StoryOfOursPage() {
             )
            })}
 
-          {allChaptersCompleted && (
-             <Card
-                onClick={() => {
-                  if (isSecretLetterUnlocked) {
-                    setSecretLetterPhase(0);
-                    setIsSecretLetterOpen(true);
-                  } else {
-                    setIsPasswordDialogOpen(true);
-                  }
-                }}
-                className="bg-card/50 backdrop-blur-sm border-accent/40 transition-all duration-300 shadow-lg cursor-pointer hover:border-accent/70 hover:bg-card/70 hover:shadow-accent/20 animate-fade-in-up"
-              >
-                <CardContent className="p-6 flex items-center justify-between">
-                  <h2 className="text-2xl font-headline text-accent/90">A Secret Letter</h2>
-                   {secretLetterCompleted ? (
-                     <CheckCircle className="w-8 h-8 text-accent" />
-                   ) : (
-                    <KeyRound className="w-8 h-8 text-accent/80" />
-                   )}
-                </CardContent>
-              </Card>
-          )}
+           <Card
+              onClick={() => {
+                if (isSecretLetterUnlocked) {
+                  setSecretLetterPhase(0);
+                  setIsSecretLetterOpen(true);
+                } else {
+                  setIsPasswordDialogOpen(true);
+                }
+              }}
+              className="bg-card/50 backdrop-blur-sm border-accent/40 transition-all duration-300 shadow-lg cursor-pointer hover:border-accent/70 hover:bg-card/70 hover:shadow-accent/20 animate-fade-in-up"
+            >
+              <CardContent className="p-6 flex items-center justify-between">
+                <h2 className="text-2xl font-headline text-accent/90">A Secret Letter</h2>
+                 {secretLetterCompleted ? (
+                   <CheckCircle className="w-8 h-8 text-accent" />
+                 ) : (
+                  <KeyRound className="w-8 h-8 text-accent/80" />
+                 )}
+              </CardContent>
+            </Card>
         </div>
       </main>
 
@@ -297,7 +294,7 @@ export default function StoryOfOursPage() {
            <DialogHeader>
               <DialogTitle className="font-headline text-2xl text-primary">Unlock the Secret</DialogTitle>
                <DialogDescription>
-                something that you always calls me 
+                something you call to tease me
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handlePasswordSubmit} className="space-y-4 pt-2">
@@ -364,5 +361,3 @@ export default function StoryOfOursPage() {
     </div>
   );
 }
-
-    

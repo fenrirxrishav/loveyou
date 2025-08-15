@@ -12,19 +12,19 @@ import { HeartStream } from '@/components/heart-stream';
 import { cn } from '@/lib/utils';
 
 const animatedWords = [
-    { text: "Every time I think of you, my heart feels full.", position: { top: '5%', left: '50%' } },
-    { text: "You’re not just part of my life—you’re the best part.", position: { top: '25%', left: '95%' } },
-    { text: "Loving you is my favorite thing I’ve ever done.", position: { top: '50%', left: '100%' } },
-    { text: "You’re the reason ordinary days feel extraordinary.", position: { top: '75%', left: '95%' } },
-    { text: "No matter where life takes me, my heart will always find you.", position: { top: '95%', left: '50%' } },
-    { text: "I didn’t know what completeness felt like until you.", position: { top: '75%', left: '5%' } },
-    { text: "Your smile is my daily dose of happiness.", position: { top: '50%', left: '0%' } },
-    { text: "I am so lucky to have you.", position: { top: '25%', left: '5%' } },
+    { text: "Every time I think of you, my heart feels full.", position: { top: '5%', left: '50%' }, mobilePosition: { top: '2%', left: '50%'} },
+    { text: "You’re not just part of my life—you’re the best part.", position: { top: '25%', left: '95%' }, mobilePosition: { top: '15%', left: '85%'} },
+    { text: "Loving you is my favorite thing I’ve ever done.", position: { top: '50%', left: '100%' }, mobilePosition: { top: '35%', left: '98%'} },
+    { text: "You’re the reason ordinary days feel extraordinary.", position: { top: '75%', left: '95%' }, mobilePosition: { top: '55%', left: '85%'} },
+    { text: "No matter where life takes me, my heart will always find you.", position: { top: '95%', left: '50%' }, mobilePosition: { top: '75%', left: '50%'} },
+    { text: "I didn’t know what completeness felt like until you.", position: { top: '75%', left: '5%' }, mobilePosition: { top: '55%', left: '15%'} },
+    { text: "Your smile is my daily dose of happiness.", position: { top: '50%', left: '0%' }, mobilePosition: { top: '35%', left: '2%'} },
+    { text: "I am so lucky to have you.", position: { top: '25%', left: '5%' }, mobilePosition: { top: '15%', left: '15%'} },
 ];
 
 const AnimatedWord = ({ text, position, isVisible }: { text: string; position: { top: string; left: string }, isVisible: boolean }) => (
     <div className={cn(
-        "absolute text-primary text-glow text-lg font-headline text-center w-48 z-20 transition-all duration-1000",
+        "absolute text-primary text-glow text-base md:text-lg font-headline text-center w-36 md:w-48 z-20 transition-all duration-1000",
         isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
         )}
         style={{
@@ -44,6 +44,14 @@ export default function MirrorPage() {
   const [visibleWordsCount, setVisibleWordsCount] = useState(0);
   const { toast } = useToast();
   const celebrationShownRef = useRef(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const getCameraPermission = async () => {
@@ -74,34 +82,34 @@ export default function MirrorPage() {
   }, [toast]);
   
   useEffect(() => {
-    if(hasCameraPermission && visibleWordsCount < animatedWords.length) {
+    if(hasCameraPermission) {
       const interval = setInterval(() => {
         setVisibleWordsCount((prevCount) => {
-          const newCount = prevCount + 1;
-          if (newCount >= animatedWords.length) {
-            clearInterval(interval);
+          if (prevCount < animatedWords.length) {
+            return prevCount + 1;
           }
-          return newCount;
+          clearInterval(interval);
+          return prevCount;
         });
       }, 2000); // Reveal a new word every 2 seconds
       return () => clearInterval(interval);
     }
-  }, [hasCameraPermission, visibleWordsCount]);
+  }, [hasCameraPermission]);
 
 
   return (
     <main className="min-h-screen w-full flex flex-col items-center justify-center py-24 pb-32 overflow-hidden">
       <PageTitle>How I See You</PageTitle>
-      <p className="text-center font-body text-lg text-foreground/80 mb-12 animate-fade-in-up max-w-xl z-10">
+      <p className="text-center font-body text-lg text-foreground/80 mb-12 animate-fade-in-up max-w-xl z-10 px-4">
         Look into the mirror and see the reflection of my heart. But also, it's your birthday! See yourself as I see you: a cause for celebration.
       </p>
 
-      <div className="relative w-[350px] h-[350px] md:w-[450px] md:h-[450px] flex items-center justify-center">
+      <div className="relative w-[300px] h-[300px] sm:w-[350px] sm:h-[350px] md:w-[450px] md:h-[450px] flex items-center justify-center">
         {hasCameraPermission && animatedWords.map((word, index) => (
             <AnimatedWord 
                 key={word.text} 
                 text={word.text} 
-                position={word.position} 
+                position={isMobile ? word.mobilePosition : word.position} 
                 isVisible={index < visibleWordsCount} 
             />
         ))}
@@ -110,7 +118,7 @@ export default function MirrorPage() {
           <CardContent className="p-0 w-full h-full flex items-center justify-center">
             {hasCameraPermission && (
               <>
-                {showCelebration && <BirthdayCelebration />}
+                {showCelebration && <BirthdayCelebration oneTime={true} />}
                 <HeartStream />
               </>
             )}

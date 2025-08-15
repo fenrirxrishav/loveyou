@@ -10,17 +10,19 @@ const ConfettiPiece = ({ style, colorClass }: { style: React.CSSProperties, colo
   />
 );
 
-export const BirthdayCelebration = () => {
+export const BirthdayCelebration = ({ oneTime = false }: { oneTime?: boolean}) => {
     const [isClient, setIsClient] = useState(false);
     const [show, setShow] = useState(true);
 
     useEffect(() => {
         setIsClient(true);
-        const timer = setTimeout(() => {
-            setShow(false);
-        }, 4500); // Animation duration + a little extra
-        return () => clearTimeout(timer);
-    }, []);
+        if (oneTime) {
+          const timer = setTimeout(() => {
+              setShow(false);
+          }, 4500); // Animation duration + a little extra
+          return () => clearTimeout(timer);
+        }
+    }, [oneTime]);
 
     const confetti = useMemo(() => {
         if (!isClient) return [];

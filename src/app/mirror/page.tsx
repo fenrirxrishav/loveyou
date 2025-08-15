@@ -35,7 +35,7 @@ const AnimatedWord = ({ text, position, isVisible, animationDelay }: { text: str
         }}
     >
         {isVisible && (
-             <p className="animate-typing overflow-hidden whitespace-nowrap border-r-2 border-r-primary pr-1">
+             <p className="animate-typing overflow-hidden whitespace-nowrap border-r-2 border-r-primary pr-1" style={{'--step-count': text.length} as React.CSSProperties}>
                 {text}
              </p>
         )}

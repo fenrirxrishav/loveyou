@@ -187,7 +187,8 @@ body {
   }
   
   .animate-typing {
-    animation: typing 2.5s steps(40, end) forwards, blink-caret .75s step-end infinite;
+    animation: typing 2.5s steps(var(--step-count)) forwards, blink-caret .75s step-end forwards;
+    animation-iteration-count: 1;
   }
   
   @keyframes typing {
@@ -198,5 +199,6 @@ body {
   @keyframes blink-caret {
     from, to { border-color: transparent }
     50% { border-color: hsl(var(--primary)); }
+    100% { border-color: transparent; }
   }
 }

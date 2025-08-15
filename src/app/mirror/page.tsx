@@ -24,10 +24,11 @@ const animatedWords = [
 
 
 const AnimatedWord = ({ text, position, isVisible }: { text: string; position: { top: string; left: string }, isVisible: boolean }) => (
-    <div className={cn(
-        "absolute text-primary text-glow text-sm font-headline text-center max-w-[150px] sm:max-w-xs z-30",
-        "transition-opacity duration-1000",
-        isVisible ? 'opacity-100' : 'opacity-0'
+    <div
+        className={cn(
+            "absolute text-primary text-glow text-sm font-headline text-center max-w-[150px] sm:max-w-xs z-30",
+            "transition-opacity duration-1000",
+            isVisible ? 'opacity-100' : 'opacity-0'
         )}
         style={{
             top: position.top,
@@ -36,9 +37,11 @@ const AnimatedWord = ({ text, position, isVisible }: { text: string; position: {
         }}
     >
         {isVisible && (
-             <p className="animate-typing overflow-hidden pr-1" style={{'--step-count': text.length} as React.CSSProperties}>
-                {text}
-             </p>
+             <div className="inline-block">
+                <p className="animate-typing overflow-hidden pr-1" style={{'--step-count': text.length} as React.CSSProperties}>
+                    {text}
+                </p>
+             </div>
         )}
     </div>
 );

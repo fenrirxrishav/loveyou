@@ -22,9 +22,9 @@ const animatedWords = [
     { text: "I am so lucky to have you.", position: { top: '25%', left: '5%' }, mobilePosition: { top: '20%', left: '15%'} },
 ];
 
-const AnimatedWord = ({ text, position, isVisible, animationDelay }: { text: string; position: { top: string; left: string }, isVisible: boolean, animationDelay: string }) => (
+const AnimatedWord = ({ text, position, isVisible }: { text: string; position: { top: string; left: string }, isVisible: boolean }) => (
     <div className={cn(
-        "absolute text-primary text-glow text-sm md:text-base font-headline text-center w-36 md:w-48 z-20",
+        "absolute text-primary text-glow text-sm md:text-base font-headline text-center max-w-xs z-20",
         "transition-opacity duration-1000",
         isVisible ? 'opacity-100' : 'opacity-0'
         )}
@@ -94,7 +94,7 @@ export default function MirrorPage() {
           if (prevCount < animatedWords.length) {
             return prevCount + 1;
           }
-          clearInterval(interval);
+          // clearInterval(interval); // We want it to stay
           return prevCount;
         });
       }, 3000); // Reveal a new word every 3 seconds
@@ -117,7 +117,6 @@ export default function MirrorPage() {
                 text={word.text} 
                 position={isMobile ? word.mobilePosition : word.position} 
                 isVisible={index < visibleWordsCount} 
-                animationDelay={`${index * 0.5}s`}
             />
         ))}
         <div className="absolute inset-0 rounded-full border-4 border-primary glow z-10" />

@@ -12,21 +12,21 @@ import { HeartStream } from '@/components/heart-stream';
 import { cn } from '@/lib/utils';
 
 const animatedWords = [
-    { text: "Every time I think of you, my heart feels full.", position: { top: '5%', left: '50%' }, mobilePosition: { top: '2%', left: '50%'} },
-    { text: "You’re not just part of my life—you’re the best part.", position: { top: '25%', left: '95%' }, mobilePosition: { top: '18%', left: '85%'} },
-    { text: "Loving you is my favorite thing I’ve ever done.", position: { top: '50%', left: '100%' }, mobilePosition: { top: '35%', left: '95%'} },
-    { text: "You’re the reason ordinary days feel extraordinary.", position: { top: '75%', left: '95%' }, mobilePosition: { top: '55%', left: '90%'} },
-    { text: "No matter where life takes me, my heart will always find you.", position: { top: '95%', left: '50%' }, mobilePosition: { top: '75%', left: '50%'} },
-    { text: "I didn’t know what completeness felt like until you.", position: { top: '75%', left: '5%' }, mobilePosition: { top: '55%', left: '10%'} },
-    { text: "Your smile is my daily dose of happiness.", position: { top: '50%', left: '0%' }, mobilePosition: { top: '35%', left: '5%'} },
-    { text: "I am so lucky to have you.", position: { top: '25%', left: '5%' }, mobilePosition: { top: '18%', left: '15%'} },
+    { text: "Every time I think of you,\nmy heart feels full.", position: { top: '8%', left: '50%' }, mobilePosition: { top: '5%', left: '50%'} },
+    { text: "You’re not just part of my life—\nyou’re the best part.", position: { top: '25%', left: '95%' }, mobilePosition: { top: '25%', left: '90%'} },
+    { text: "Loving you is my favorite\nthing I’ve ever done.", position: { top: '50%', left: '100%' }, mobilePosition: { top: '50%', left: '95%'} },
+    { text: "You’re the reason ordinary days\nfeel extraordinary.", position: { top: '75%', left: '95%' }, mobilePosition: { top: '75%', left: '90%'} },
+    { text: "No matter where life takes me,\nmy heart will always find you.", position: { top: '92%', left: '50%' }, mobilePosition: { top: '95%', left: '50%'} },
+    { text: "I didn’t know what completeness\nfelt like until you.", position: { top: '75%', left: '5%' }, mobilePosition: { top: '75%', left: '10%'} },
+    { text: "Your smile is my daily\ndose of happiness.", position: { top: '50%', left: '0%' }, mobilePosition: { top: '50%', left: '5%'} },
+    { text: "I am so lucky\nto have you.", position: { top: '25%', left: '5%' }, mobilePosition: { top: '25%', left: '10%'} },
 ];
 
 
 const AnimatedWord = ({ text, position, isVisible }: { text: string; position: { top: string; left: string }, isVisible: boolean }) => (
     <div
         className={cn(
-            "absolute text-primary text-glow text-sm font-headline text-center max-w-[150px] sm:max-w-xs z-30",
+            "absolute text-primary text-glow text-sm font-headline text-center max-w-sm z-30",
             "transition-opacity duration-1000",
             isVisible ? 'opacity-100' : 'opacity-0'
         )}
@@ -37,10 +37,12 @@ const AnimatedWord = ({ text, position, isVisible }: { text: string; position: {
         }}
     >
         {isVisible && (
-             <div className="inline-block">
-                <p className="animate-typing overflow-hidden pr-1" style={{'--step-count': text.length} as React.CSSProperties}>
-                    {text}
-                </p>
+             <div className="animate-typing">
+                {text.split('\n').map((line, index) => (
+                   <p key={index} style={{'--step-count': line.length} as React.CSSProperties}>
+                       {line}
+                   </p>
+                ))}
              </div>
         )}
     </div>
@@ -97,7 +99,7 @@ export default function MirrorPage() {
           if (prevCount < animatedWords.length) {
             return prevCount + 1;
           }
-          // clearInterval(interval); // We want it to stay
+          clearInterval(interval);
           return prevCount;
         });
       }, 3000); // Reveal a new word every 3 seconds
